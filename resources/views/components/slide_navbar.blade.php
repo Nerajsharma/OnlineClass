@@ -3,10 +3,10 @@
         <div class="list_header mt-5 pl-8 capitalize">
             <div class="flex h-full w-full flex-col justify-between">
                 <div class="flex h-full w-full flex-col">
-                    <a href="" class="">
+                    <a href="/dashboard" class="">
                         Dashboard
                     </a>
-                    <a href="" class="">
+                    <a href="/student" class="">
                         Student
                     </a>
                     <a href="" class="">
