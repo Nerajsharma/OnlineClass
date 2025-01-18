@@ -1,104 +1,56 @@
 <x-app-layout>
-    <main>
+    <div>
         <div class="container mx-auto">
-          <h1 class="text-2xl font-bold mb-5"> User's Table</h1>
-           <table class="min-w-full table-auto border-collapse rounded-lg shadow-md h-100% w-100% bg-gray-50">
-               <thead>
-                 <tr class="bg-gray-100">
-                   <th class="px-6 py-3 text-left text-sm font-medium text-black">SN.</th>
-                   <th class="px-6 py-3 text-left text-sm font-medium text-black">Name</th>
-                   <th class="px-6 py-3 text-left text-sm font-medium text-black">Email</th>
-                   <th class="px-6 py-3 text-left text-sm font-medium text-black">Contact No</th>
-                   <th class="px-6 py-3 text-left text-sm font-medium text-black">Esewa Number</th>
-                   <th class="px-6 py-3 text-left text-sm font-medium text-black">System</th>
-                   <th class="px-6 py-3 text-left text-sm font-medium text-black">Status</th>
-                   <th class="px-6 py-3 text-left text-sm font-medium text-black">Course</th>
-                   <th class="px-6 py-3 text-left text-sm font-medium text-black">Action</th>
-                 </tr>
-               </thead>
-               <tbody>
-                    <tr class="border-t hover:bg-gray-400 overflow-hidden">
-                      <td class="px-6 py-3 text-sm text-black">1</td>
-                      <td class="px-2 py-3 text-sm text-black">John Doe</td>
-                      <td class="px-6 py-3 text-sm text-black">john.doe@example.com</td>
-                      <td class="px-6 py-3 text-sm text-black">9802020202</td>
-                      <td class="px-6 py-3 text-sm text-black">98********</td>
-                      <td class="px-6 py-3 text-sm text-black">Mobile</td>
-                      <td class="px-6 py-3 text-sm text-black">frondend</td>
-                      <td class="px-6 py-3 text-sm text-black">Active</td>
-                       <td class="px-6 py-3 text-sm">
-                          <button class="px-4 py-2 bg-blue-500 text-white rounded">Approve </button>
-                          <button class="px-4 py-2 bg-red-500 text-white rounded">Block  </button>
-                          <button class="px-4 py-2 bg-yellow-500 text-white rounded mt-1">pending </button>  
-                          <button class="px-4 py-2 bg-green-500 text-white rounded">Edit </button>  
-                      </td>
+            <h1 class="mb-5 text-xl font-bold"> User's Table</h1>
+            <table
+                class="h-full w-full table-auto border-collapse overflow-hidden rounded-lg bg-gray-50 text-center shadow-md">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">SN.</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Name</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Email</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Contact No</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Role</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">System</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Status</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Course</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Action</th>
                     </tr>
-                    <tr class="border-t hover:bg-gray-400 overflow-hidden">
-                        <td class="px-6 py-3 text-sm text-black bg-gray-200">2</td>
-                        <td class="px-2 py-3 text-sm text-black bg-gray-200">John Doe</td>
-                        <td class="px-6 py-3 text-sm text-black bg-gray-200">john.doe@example.com</td>
-                        <td class="px-6 py-3 text-sm text-black bg-gray-200">9802020202</td>
-                        <td class="px-6 py-3 text-sm text-black bg-gray-200">98********</td>
-                        <td class="px-6 py-3 text-sm text-black bg-gray-200">Mobile</td>
-                        <td class="px-6 py-3 text-sm text-black bg-gray-200">frondend</td>
-                        <td class="px-6 py-3 text-sm text-black bg-gray-200">Active</td>
-                         <td class="px-6 py-3 text-sm bg-gray-200">
-                            <button class="px-4 py-2 bg-blue-500 text-white rounded">Approve </button>
-                            <button class="px-4 py-2 bg-red-500 text-white rounded">Block  </button>
-                            <button class="px-4 py-2 bg-yellow-500 text-white rounded mt-1">pending </button>  
-                            <button class="px-4 py-2 bg-green-500 text-white rounded">Edit </button>  
-                       </td>
-                    </tr>
-                    <tr class="border-t hover:bg-gray-400 overflow-hidden">
-                      <td class="px-6 py-3 text-sm text-black">3</td>
-                      <td class="px-2 py-3 text-sm text-black">John Doe</td>
-                      <td class="px-6 py-3 text-sm text-black">john.doe@example.com</td>
-                      <td class="px-6 py-3 text-sm text-black">9802020202</td>
-                      <td class="px-6 py-3 text-sm text-black">98********</td>
-                      <td class="px-6 py-3 text-sm text-black">Mobile</td>
-                      <td class="px-6 py-3 text-sm text-black">frondend</td>
-                      <td class="px-6 py-3 text-sm text-black">Active</td>
-                       <td class="px-6 py-3 text-sm">
-                        <button class="px-4 py-2 bg-blue-500 text-white rounded">Approve </button>
-                        <button class="px-4 py-2 bg-red-500 text-white rounded">Block  </button>
-                        <button class="px-4 py-2 bg-yellow-500 text-white rounded  mt-1">pending </button>  
-                        <button class="px-4 py-2 bg-green-500 text-white rounded">Edit</button>  
-                     </td>
-                    </tr>
-                    <tr class="border-t hover:bg-gray-400 overflow-hidden">
-                      <td class="px-6 py-3 text-sm text-black bg-gray-200">4</td>
-                      <td class="px-2 py-3 text-sm text-black bg-gray-200">John Doe</td>
-                      <td class="px-6 py-3 text-sm text-black bg-gray-200">john.doe@example.com</td>
-                      <td class="px-6 py-3 text-sm text-black bg-gray-200">9802020202</td>
-                      <td class="px-6 py-3 text-sm text-black bg-gray-200">98********</td>
-                      <td class="px-6 py-3 text-sm text-black bg-gray-200">Mobile</td>
-                      <td class="px-6 py-3 text-sm text-black bg-gray-200">frondend</td>
-                      <td class="px-6 py-3 text-sm text-black bg-gray-200">Active</td>
-                       <td class="px-6 py-3 text-sm bg-gray-200">
-                        <button class="px-4 py-2 bg-blue-500 text-white rounded">Approve </button>
-                        <button class="px-4 py-2 bg-red-500 text-white rounded">Block  </button>
-                        <button class="px-4 py-2 bg-yellow-500 text-white rounded mt-1">pending </button>  
-                        <button class="px-4 py-2 bg-green-500 text-white rounded">Edit </button>  
-                     </td>
-                    </tr>
-                    <tr class="border-t hover:bg-gray-400 overflow-hidden">
-                        <td class="px-6 py-3 text-sm text-black">5</td>
-                        <td class="px-2 py-3 text-sm text-black">John Doe</td>
-                        <td class="px-6 py-3 text-sm text-black">john.doe@example.com</td>
-                        <td class="px-6 py-3 text-sm text-black">9802020202</td>
-                        <td class="px-6 py-3 text-sm text-black">98********</td>
-                        <td class="px-6 py-3 text-sm text-black">Mobile</td>
-                        <td class="px-6 py-3 text-sm text-black">frondend</td>
-                        <td class="px-6 py-3 text-sm text-black">Active</td>
-                        <td class="px-4 py-3 text-sm">
-                            <button class="px-4 py-2 bg-blue-500 text-white rounded">Approve </button>
-                            <button class="px-4 py-2 bg-red-500 text-white rounded">Block  </button>
-                            <button class="px-4 py-2 bg-yellow-500 text-white rounded gap-2 mt-1">pending </button>  
-                            <button class="px-4 py-2 bg-green-500 text-white rounded gap-2">Edit </button>  
-                       </td>
-                    </tr>
-               </tbody>
+                </thead>
+                <tbody>
+                    @foreach ($users as $user)
+                        <tr class="overflow-hidden border-t hover:bg-gray-200">
+                            <td class="p-1 text-sm text-black">{{ $user->id }}</td>
+                            <td class="p-1 text-sm text-black">{{ $user->name }}</td>
+                            <td class="p-1 text-sm text-black">{{ $user->email }}</td>
+                            <td class="p-1 text-sm text-black">{{ $user->contact }}</td>
+                            <td class="p-1 text-sm text-black">{{ $user->role }}</td>
+                            <td class="p-1 text-sm text-black">{{ $user->system }}</td>
+                            <td class="p-1 text-sm text-black">{{ $user->status }}</td>
+                            <td class="p-1 text-sm text-black">Cource</td>
+                            <td class="p-1 text-sm">
+                                @if ($user->status == 'block' || $user->status == 'pending')
+                                    <form action="{{ route('users.approve', $user->id) }}" method="POST"
+                                        class="inline">
+                                        @csrf
+                                        <button type="submit"
+                                            class="rounded bg-blue-500 px-4 py-2 text-white">Approve</button>
+                                    </form>
+                                @elseif ($user->status == 'active')
+                                    <form action="{{ route('users.block', $user->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit"
+                                            class="rounded bg-red-500 px-4 py-2 text-white">Block</button>
+                                    </form>
+                                @endif
+
+                                <button class="rounded bg-green-500 px-4 py-2 text-white">Edit </button>
+                            </td>
+                        </tr>
+                    @endforeach
+
+                </tbody>
             </table>
         </div>
-      </main>
+    </div>
 </x-app-layout>
