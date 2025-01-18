@@ -9,10 +9,10 @@
                     <a href="{{ route('student.index') }}" class="">
                         Student
                     </a>
-                    <a href="" class="">
+                    <a href="/class" class="">
                         Class
                     </a>
-                    <a href="" class="">
+                    <a href="/notes" class="">
                         Notes
                     </a>
                     <a href="" class="">
