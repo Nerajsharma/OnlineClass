@@ -6,7 +6,7 @@
                     <a href="{{ route('dashboard.index') }}" class="">
                         Dashboard
                     </a>
-                    <a href="" class="">
+                    <a href="/student" class="">
                         Student
                     </a>
                     <a href="" class="">

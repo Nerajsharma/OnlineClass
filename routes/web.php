@@ -6,6 +6,9 @@ use App\Http\Controllers\NoticeController;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route::get('/student', function () {
+    return view('admin.student');
+});
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
