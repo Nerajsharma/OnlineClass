@@ -2,7 +2,7 @@
     <main>
         <div class="container mx-auto">
           <h1 class="text-2xl font-bold mb-5"> User's Table</h1>
-           <table class="min-w-full table-auto border-collapse rounded-lg shadow-md h-100% w-100% bg-gray-50">
+           <table class="min-w-full table-auto border-collapse rounded-lg shadow-md h-100% w-100% bg-gray-50/50">
                <thead>
                  <tr class="bg-gray-100">
                    <th class="px-6 py-3 text-left text-sm font-medium text-black">SN.</th>
@@ -29,7 +29,7 @@
                        <td class="px-6 py-3 text-sm">
                           <button class="px-4 py-2 bg-blue-500 text-white rounded">Approve </button>
                           <button class="px-4 py-2 bg-red-500 text-white rounded">Block  </button>
-                          <button class="px-4 py-2 bg-yellow-500 text-white rounded mt-1">pending </button>  
+                          <button class="px-4 py-2 bg-yellow-500 text-white rounded mt-1">Pending </button>  
                           <button class="px-4 py-2 bg-green-500 text-white rounded">Edit </button>  
                       </td>
                     </tr>
@@ -42,12 +42,12 @@
                         <td class="px-6 py-3 text-sm text-black bg-gray-200">Mobile</td>
                         <td class="px-6 py-3 text-sm text-black bg-gray-200">frondend</td>
                         <td class="px-6 py-3 text-sm text-black bg-gray-200">Active</td>
-                         <td class="px-6 py-3 text-sm bg-gray-200">
+                        <td class="px-6 py-3 text-sm bg-gray-200">
                             <button class="px-4 py-2 bg-blue-500 text-white rounded">Approve </button>
                             <button class="px-4 py-2 bg-red-500 text-white rounded">Block  </button>
                             <button class="px-4 py-2 bg-yellow-500 text-white rounded mt-1">pending </button>  
                             <button class="px-4 py-2 bg-green-500 text-white rounded">Edit </button>  
-                       </td>
+                        </td>
                     </tr>
                     <tr class="border-t hover:bg-gray-400 overflow-hidden">
                       <td class="px-6 py-3 text-sm text-black">3</td>

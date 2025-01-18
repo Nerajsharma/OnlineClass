@@ -9,6 +9,12 @@ Route::get('/', function () {
 Route::get('/student', function () {
     return view('admin.student');
 });
+Route::get('/class', function () {
+    return view('admin.class');
+});
+Route::get('/notes', function () {
+    return view('admin.notes');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
