@@ -32,14 +32,21 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'contact' => ['required', 'string', 'max:15'],
+            'system' => ['nullable', 'string', 'max:255'], // System is optional
         ]);
 
+        // Create the user with default role and status
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'contact' => $request->contact,
+            'role' => 'user', // Default role
+            'system' => $request->system, // System is nullable
+            'status' => 'active', // Default status
         ]);
 
         event(new Registered($user));
@@ -48,4 +55,6 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+
 }
