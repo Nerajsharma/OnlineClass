@@ -46,7 +46,8 @@ class RegisteredUserController extends Controller
             'contact' => $request->contact,
             'role' => 'user', // Default role
             'system' => $request->system, // System is nullable
-            'status' => 'active', // Default status
+            'cource' => $request->cource,
+            'status' => 'pending', // Default status
         ]);
 
         event(new Registered($user));

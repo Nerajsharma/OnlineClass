@@ -58,7 +58,8 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id); // Find the user or throw 404
+        return view('admin.editstudent', compact('user'));
     }
 
     /**
@@ -70,7 +71,20 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'contact_no' => 'required|string|max:15',
+            'role' => 'required|in:admin,employee,user',
+            'status' => 'required|in:active,pending,block',
+            'course' => 'nullable|string|max:255',
+            'system' => 'nullable|string|max:255',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+
+        return redirect()->route('student.index')->with('success', 'User details updated successfully.');
     }
 
     /**

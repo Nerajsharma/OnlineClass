@@ -26,8 +26,10 @@
                             <td class="p-1 text-sm text-black">{{ $user->contact }}</td>
                             <td class="p-1 text-sm text-black">{{ $user->role }}</td>
                             <td class="p-1 text-sm text-black">{{ $user->system }}</td>
-                            <td class="p-1 text-sm text-black">{{ $user->status }}</td>
-                            <td class="p-1 text-sm text-black">Cource</td>
+                            <td
+                                class="@if ($user->status == 'active') bg-green-200 @elseif ($user->status == 'pending') bg-yellow-200 @elseif ($user->status == 'block') bg-red-200 @endif p-1 text-sm font-bold capitalize text-black">
+                                {{ $user->status }}</td>
+                            <td class="p-1 text-sm text-black">{{ $user->cource }}</td>
                             <td class="p-1 text-sm">
                                 @if ($user->status == 'block' || $user->status == 'pending')
                                     <form action="{{ route('users.approve', $user->id) }}" method="POST"
@@ -43,8 +45,9 @@
                                             class="rounded bg-red-500 px-4 py-2 text-white">Block</button>
                                     </form>
                                 @endif
-
-                                <button class="rounded bg-green-500 px-4 py-2 text-white">Edit </button>
+                                <a href="{{ route('users.edit', $user->id) }}">
+                                    <button class="rounded bg-green-500 px-4 py-2 text-white">Edit </button>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

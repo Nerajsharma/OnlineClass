@@ -11,7 +11,7 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::group(['middleware' => ['auth', 'check.status']], function () {
+Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function () {
     // notice
     Route::get('/dashboard', [NoticeController::class, 'index'])->name('dashboard.index');
     Route::post('/notices', [NoticeController::class, 'store'])->name('notices.store');
@@ -20,6 +20,8 @@ Route::group(['middleware' => ['auth', 'check.status']], function () {
     Route::get('/dashboard/student', [StudentController::class, 'index'])->name('student.index');
     Route::post('/dashboard/user/{id}/approve', [StudentController::class, 'approve'])->name('users.approve');
     Route::post('/dashboard/user/{id}/block', [StudentController::class, 'block'])->name('users.block');
+    Route::get('/dashboard/users/{id}/edit', [StudentController::class, 'edit'])->name('users.edit');
+    Route::put('/dashboard/users/{id}', [StudentController::class, 'update'])->name('users.update');
 });
 
 Route::middleware('auth')->group(function () {
