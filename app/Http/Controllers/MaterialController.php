@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-class StudentController extends Controller
+
+class MaterialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,9 +13,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('admin.student', compact('users'));
-
+        return view('admin.material');
     }
 
     /**
@@ -58,8 +56,7 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id); // Find the user or throw 404
-        return view('admin.editstudent', compact('user'));
+        //
     }
 
     /**
@@ -71,20 +68,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'contact_no' => 'required|string|max:15',
-            'role' => 'required|in:admin,employee,user',
-            'status' => 'required|in:active,pending,block',
-            'cource' => 'nullable|string|max:255',
-            'system' => 'nullable|string|max:255',
-        ]);
-
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-
-        return redirect()->route('student.index')->with('success', 'User details updated successfully.');
+        //
     }
 
     /**
@@ -96,22 +80,5 @@ class StudentController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function approve($id)
-    {
-        $user = User::findOrFail($id);
-        $user->status = 'active';
-        $user->save();
-
-        return redirect()->back()->with('success', 'User approved successfully!');
-    }
-
-    public function block($id)
-    {
-        $user = User::findOrFail($id);
-        $user->status = 'block';
-        $user->save();
-
-        return redirect()->back()->with('success', 'User blocked successfully!');
     }
 }

@@ -58,7 +58,7 @@
                     <!-- Course -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">Course</label>
-                        <input type="text" name="course" value="{{ $user->course }}"
+                        <input type="text" name="cource" value="{{ $user->cource }}"
                             class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm">
                     </div>
 

@@ -5,6 +5,7 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 
 Alpine.start();
+
 const addButton = document.getElementById('addButton');
 const dynamicForm = document.getElementById('dynamicForm');
 const cancelButton = document.getElementById('cancelButton');

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-class StudentController extends Controller
+use App\Models\classes;
+
+class ControlerClasses extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,9 +14,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('admin.student', compact('users'));
-
+        $meet = classes::all();
+        // $user
+        return view('admin.class', compact('meet'));
     }
 
     /**
@@ -36,7 +37,21 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'classlink' => 'required|string',
+            'link_batch' => 'required|string',
+        ]);
+
+        // Save the data
+        $class = new classes();
+        $class->classlink = $request->classlink;
+        $class->link_batch = $request->link_batch;
+        $class->starttime = now(); // Automatically sets the current date and time
+        $class->endtime = $request->endtime; // This will be null if not provided
+        $class->status = $request->status ?? 'active';
+        $class->save();
+
+        return redirect()->back()->with('success', 'Class added successfully!');
     }
 
     /**
@@ -58,8 +73,7 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id); // Find the user or throw 404
-        return view('admin.editstudent', compact('user'));
+        //
     }
 
     /**
@@ -71,20 +85,7 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'contact_no' => 'required|string|max:15',
-            'role' => 'required|in:admin,employee,user',
-            'status' => 'required|in:active,pending,block',
-            'cource' => 'nullable|string|max:255',
-            'system' => 'nullable|string|max:255',
-        ]);
-
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-
-        return redirect()->route('student.index')->with('success', 'User details updated successfully.');
+        //
     }
 
     /**
@@ -97,21 +98,15 @@ class StudentController extends Controller
     {
         //
     }
-    public function approve($id)
+    public function end($id)
     {
-        $user = User::findOrFail($id);
-        $user->status = 'active';
-        $user->save();
+        // Logic to mark the class as ended or update the `endtime`
+        $class = classes::findOrFail($id);
 
-        return redirect()->back()->with('success', 'User approved successfully!');
-    }
+        $class->endtime = now(); // Set the endtime to the current time
+        $class->status = 'ended'; // Example of updating the status
+        $class->save();
 
-    public function block($id)
-    {
-        $user = User::findOrFail($id);
-        $user->status = 'block';
-        $user->save();
-
-        return redirect()->back()->with('success', 'User blocked successfully!');
+        return redirect()->back()->with('success', 'Class ended successfully!');
     }
 }

@@ -3,7 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\ControlerClasses;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\MaterialController;
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -22,8 +24,20 @@ Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function 
     Route::post('/dashboard/user/{id}/block', [StudentController::class, 'block'])->name('users.block');
     Route::get('/dashboard/users/{id}/edit', [StudentController::class, 'edit'])->name('users.edit');
     Route::put('/dashboard/users/{id}', [StudentController::class, 'update'])->name('users.update');
+
+    // class
+    Route::get('/dashboard/class', [ControlerClasses::class, 'index'])->name('class.index');
+    Route::post('/dashboard/class', [ControlerClasses::class, 'store'])->name('classes.store');
+    Route::get('/dashboard/class/end/{id}', [ControlerClasses::class, 'end'])->name('classes.end');
+
+    // material
+    Route::get('/dashboard/material', [MaterialController::class, 'index'])->name('material.index');
+
 });
 
+Route::get('/dashboard/notes', function () {
+    return view('admin.notes');
+})->name('notes.index');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
