@@ -13,7 +13,7 @@
                         <th class="px-6 py-3 text-left text-sm font-medium text-black">Role</th>
                         <th class="px-6 py-3 text-left text-sm font-medium text-black">System</th>
                         <th class="px-6 py-3 text-left text-sm font-medium text-black">Status</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Course</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Batch</th>
                         <th class="px-6 py-3 text-left text-sm font-medium text-black">Action</th>
                     </tr>
                 </thead>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Batch;
 class StudentController extends Controller
 {
     /**
@@ -58,8 +59,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
+        $batches = Batch::all();
         $user = User::findOrFail($id); // Find the user or throw 404
-        return view('admin.editstudent', compact('user'));
+        return view('admin.editstudent', compact('user', 'batches'));
     }
 
     /**

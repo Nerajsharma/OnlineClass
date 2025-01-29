@@ -57,9 +57,19 @@
 
                     <!-- Course -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700">Course</label>
-                        <input type="text" name="cource" value="{{ $user->cource }}"
+                        <label class="block text-sm font-medium text-gray-700">Batch</label>
+                        <select name="cource" id="cource"
                             class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm">
+                            @foreach ($batches as $batch)
+                                <option value="{{ $batch->batch_name }}"
+                                    {{ isset($user->cource) && $batch->batch_name === $user->cource ? 'selected' : '' }}>
+                                    {{ $batch->batch_name }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                        {{-- <input type="text" name="cource" value="{{ $user->cource }}"
+                            class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm"> --}}
                     </div>
 
                     <!-- Submit Button -->

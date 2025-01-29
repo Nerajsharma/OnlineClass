@@ -6,6 +6,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\ControlerClasses;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\BatchController;
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -24,6 +25,10 @@ Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function 
     Route::post('/dashboard/user/{id}/block', [StudentController::class, 'block'])->name('users.block');
     Route::get('/dashboard/users/{id}/edit', [StudentController::class, 'edit'])->name('users.edit');
     Route::put('/dashboard/users/{id}', [StudentController::class, 'update'])->name('users.update');
+
+    // batch
+    Route::get('/dashboard/Batch', [BatchController::class, 'index'])->name('batch.index');
+    Route::post('/dashboard/batches/store', [BatchController::class, 'store'])->name('batches.store');
 
     // class
     Route::get('/dashboard/class', [ControlerClasses::class, 'index'])->name('class.index');

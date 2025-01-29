@@ -9,6 +9,9 @@
                     <a href="{{ route('student.index') }}" class="">
                         Student
                     </a>
+                    <a href="{{ route('batch.index') }}" class="">
+                        Batch
+                    </a>
                     <a href="{{ route('class.index') }}" class="">
                         Class
                     </a>
