@@ -1,12 +1,19 @@
 <x-app-layout>
+    <script>
+        @if (session('success'))
+            toaster("success", "Successfully", '{{ session('success') }}');
+        @elseif (session('error'))
+            toaster("error", "Upload Failed", '{{ session('success') }}');
+        @endif
+    </script>
     <div>
         <div class="container mx-auto">
-            <h1 class="mb-5 text-xl font-bold"> User's Table</h1>
+            <h1 class="text-xl font-bold"> Student's Table</h1>
             <table
                 class="h-full w-full table-auto border-collapse overflow-hidden rounded-lg bg-gray-50 text-center shadow-md">
                 <thead>
                     <tr class="bg-gray-100">
-                        <th class="px-6 py-3 text-left text-sm font-medium text-black">SN.</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-black">Date</th>
                         <th class="px-6 py-3 text-left text-sm font-medium text-black">Name</th>
                         <th class="px-6 py-3 text-left text-sm font-medium text-black">Email</th>
                         <th class="px-6 py-3 text-left text-sm font-medium text-black">Contact No</th>
@@ -20,7 +27,7 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr class="overflow-hidden border-t hover:bg-gray-200">
-                            <td class="p-1 text-sm text-black">{{ $user->id }}</td>
+                            <td class="p-1 text-sm text-black">{{ $user->created_at }}</td>
                             <td class="p-1 text-sm text-black">{{ $user->name }}</td>
                             <td class="p-1 text-sm text-black">{{ $user->email }}</td>
                             <td class="p-1 text-sm text-black">{{ $user->contact }}</td>

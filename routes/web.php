@@ -7,6 +7,8 @@ use App\Http\Controllers\ControlerClasses;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProfileEditController;
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -14,9 +16,9 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function () {
     // notice
-    Route::get('/dashboard', [NoticeController::class, 'index'])->name('dashboard.index');
     Route::post('/notices', [NoticeController::class, 'store'])->name('notices.store');
 
     // student
@@ -29,21 +31,48 @@ Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function 
     // batch
     Route::get('/dashboard/Batch', [BatchController::class, 'index'])->name('batch.index');
     Route::post('/dashboard/batches/store', [BatchController::class, 'store'])->name('batches.store');
+    Route::get('/dashboard/batches/view-details/{id}', [BatchController::class, 'view'])->name('batches.viewdetails');
 
     // class
-    Route::get('/dashboard/class', [ControlerClasses::class, 'index'])->name('class.index');
     Route::post('/dashboard/class', [ControlerClasses::class, 'store'])->name('classes.store');
     Route::get('/dashboard/class/end/{id}', [ControlerClasses::class, 'end'])->name('classes.end');
 
     // material
-    Route::get('/dashboard/material', [MaterialController::class, 'index'])->name('material.index');
+    Route::post('/dashboard/materials/store', [MaterialController::class, 'store'])->name('materials.store');
 
+    // project
+    // Route::get('/dashboard/project', [ProjectController::class, 'index'])->name('project.index');
+
+
+    // update password
+    // Route::get('/dashboard/ChangePassword', [ProfileEditController::class, 'updateprofile'])->name('updatepassword.index');
 });
 
 Route::get('/dashboard/notes', function () {
     return view('admin.notes');
 })->name('notes.index');
+
+
+// for all the user that are log in
 Route::middleware('auth')->group(function () {
+    // dashboard
+    Route::get('/dashboard', [NoticeController::class, 'index'])->name('dashboard.index');
+    // class
+    Route::get('/dashboard/class', [ControlerClasses::class, 'index'])->name('class.index');
+    // material
+    Route::get('/dashboard/material', [MaterialController::class, 'index'])->name('material.index');
+    // project
+    Route::get('/dashboard/project', [ProjectController::class, 'index'])->name('project.index');
+    // playground
+    Route::get('/dashboard/playground', function () {
+        return view('admin.playground');
+    })->name('playground.index');
+
+    // whiteboard
+    Route::get('/dashboard/whiteboard', function () {
+        return view('admin.whiteboard');
+    })->name('whiteboard.index');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

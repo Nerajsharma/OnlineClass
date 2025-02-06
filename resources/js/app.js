@@ -6,18 +6,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-// const addButton = document.getElementById("addButton");
-// const dynamicForm = document.getElementById("dynamicForm");
-// const cancelButton = document.getElementById("cancelButton");
-
-// Show form when "Add" button is clicked
-// addButton.addEventListener("click", () => {
-//     dynamicForm.classList.remove("hidden"); // Show form
-// });
-// Hide form when "Cancel" button is clicked
-// cancelButton.addEventListener("click", () => {
-//     dynamicForm.classList.add("hidden"); // Hide form
-// });
 
 const modelbtns = document.querySelectorAll(".modelbtn");
 
@@ -37,3 +25,46 @@ document.querySelectorAll(".closeModal").forEach((btn) => {
         btn.closest("div[id]").style.display = "none";
     });
 });
+
+// function toaster(type, title, text) {
+//     var icon;
+//     if (type == "success") {
+//         console.log("type sucess");
+//         icon = "nb nb_checkmark1";
+//     } else if (type == "error") {
+//         icon = "nb nb_exclamation1";
+//     } else if (type == "info") {
+//         icon = "nb nb_info3";
+//     }
+//     let notification = document.querySelector(".notification");
+//     let newtoaste = document.createElement("div");
+//     newtoaste.innerHTML = `<div class="toaster ${type} rounded px-4 py-2 mb-5 flex items-center justify-between gap-4">
+//             <i class="${icon}"></i>
+//             <div class="">
+//                 <p class="text-base font-bold">${title}</p>
+//                 <p class="text-md">${text}</p>
+//             </div>
+//             <i class="nb nb_cross text-sm" onclick="this.parentElement.remove()"></i>
+//     </div>`;
+
+//     notification.insertBefore(newtoaste, notification.firstChild);
+
+//     let existingToasters = notification.querySelectorAll(
+//         ".toaster:not(:first-child)"
+//     );
+//     existingToasters.forEach((toast) => {
+//         toast.classList.add("slide-down");
+//     });
+
+//     newtoaste.timeOut = setTimeout(() => {
+//         newtoaste.classList.add("slide-down");
+//         setTimeout(() => {
+//             newtoaste.remove();
+//         }, 300);
+//     }, 5000);
+// }
+// setInterval(() => {
+//     toaster("success", "sucess", "Form has submitted Sucessfully");
+//     toaster("error", "sucess", "i am good");
+//     toaster("info", "Invilit Alet", "Please check email box");
+// }, 3000);

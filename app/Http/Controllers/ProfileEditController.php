@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Batch;
-use App\Models\User;
-use Illuminate\Http\Request;
 
-class BatchController extends Controller
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
+
+class ProfileEditController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +18,8 @@ class BatchController extends Controller
      */
     public function index()
     {
-        $batches = Batch::all();
 
-        // Count students based on batch_name column in users table
-        $bathcstd = User::select('cource')
-            ->selectRaw('COUNT(*) as student_count')
-            ->groupBy('cource')
-            ->pluck('student_count', 'cource');
-        return view('admin.batch', compact('batches', 'bathcstd'));
+        return view('admin.profile');
     }
 
     /**
@@ -42,16 +40,7 @@ class BatchController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'batch_name' => 'required|string|max:255',
-            'batch_cource' => 'required|string|max:255',
-            'batch_duration' => 'required|string|max:255',
-        ]);
-
-        Batch::create($request->all());
-
-        return back()->with('success', 'Batch added successfully!');
-
+        //
     }
 
     /**
@@ -98,20 +87,4 @@ class BatchController extends Controller
     {
         //
     }
-    public function view($id)
-    {
-        $stbatch_name = Batch::All()->where('id', $id)->value('batch_name');
-        $stbatch = User::All()->where('cource', $stbatch_name);
-        if (!$stbatch_name) {
-            return back()->with('error', 'Batch not found');
-        }
-
-        // $stusers = $batch->users; 
-
-        // Pass the users to the view
-        return view('admin.batchdetails', compact('stbatch', 'stbatch_name'));
-    }
-
-
-
 }

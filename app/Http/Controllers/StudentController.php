@@ -61,7 +61,7 @@ class StudentController extends Controller
     {
         $batches = Batch::all();
         $user = User::findOrFail($id); // Find the user or throw 404
-        return view('admin.editstudent', compact('user', 'batches'));
+        return view('admin.editstudent', compact('user', 'batches'))->with('success', 'Student Data update');
     }
 
     /**
