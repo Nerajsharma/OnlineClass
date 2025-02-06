@@ -72,6 +72,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/whiteboard', function () {
         return view('admin.whiteboard');
     })->name('whiteboard.index');
+    // project
+    Route::post('/project/store', [ProjectController::class, 'store'])->name('project.store');
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
