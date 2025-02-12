@@ -1,7 +1,7 @@
 <nav x-data="{ open: false }" class="bg-blue-900">
     <!-- Primary Navigation Menu -->
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="flex h-16 justify-between">
+        <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <!-- Logo -->
                 <div class="flex shrink-0 items-center">
@@ -12,7 +12,8 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 text-white sm:-my-px sm:ml-10 sm:flex">
-                    <p class="font-bold">Dashboard</p>
+                    <p class="hidden font-bold">Dashboard</p>
+
                 </div>
             </div>
 
@@ -52,11 +53,13 @@
                         </form>
                     </x-slot>
                 </x-dropdown>
+
             </div>
 
             <!-- Hamburger -->
+
             <div class="-mr-2 flex items-center sm:hidden">
-                <button @click="open = ! open"
+                {{-- <button @click="open = ! open"
                     class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
@@ -65,10 +68,15 @@
                         <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
-                </button>
+                </button> --}}
+            </div>
+            <div class="text-2xl text-white md:hidden">
+                <i class="nb nb_equalizer" id="hamburger"></i>
+
             </div>
         </div>
     </div>
+
 
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">

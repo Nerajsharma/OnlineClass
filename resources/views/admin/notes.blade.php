@@ -1,18 +1,97 @@
 <x-app-layout>
-    <main>
-        <div class="notes-outer">
-            <div class="notes-wapper">
-                <div class="notes-cover px-4">
-                    <p class="m-2 p-2 font-bold text-black underline">Day-1</p>
-                    <textarea name="" id="" class="h-96 w-full rounded-lg bg-gray-500 px-4 py-4 text-white">
-                        
-                    </textarea>
-                    <p class="m-2 p-2 font-bold text-black underline">Day-2</p>
-                    <textarea name="" id="" class="h-96 w-full rounded-lg bg-gray-500 px-4 py-4 text-white">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis hic, natus ab obcaecati quidem maxime cum libero harum a quam, commodi ullam sit aliquam tenetur quos debitis laudantium. Temporibus obcaecati delectus iusto dicta assumenda, dolore provident fugit quos sunt ex esse a reiciendis dolorum. Dolorum laudantium consequuntur dolorem quas impedit. Doloribus, nisi? Illum placeat minus, alias molestias omnis provident, maiores repellendus necessitatibus ad exercitationem beatae delectus porro? Ullam, esse delectus nisi ipsam velit, eaque iste accusantium recusandae molestias laborum excepturi qui dolor! Aperiam, quaerat fuga corporis ipsum magni numquam repellat sint unde odio voluptas laudantium repudiandae. Cupiditate, minima consequuntur! Repellat iusto est nemo facere! Libero recusandae iusto quaerat, quidem, eos sint modi expedita in animi velit eaque, nulla perferendis. Sit neque, totam delectus pariatur nihil quisquam qui deserunt incidunt nobis aperiam doloremque praesentium laborum eum quasi repudiandae modi vitae est maiores sint esse hic? Quas veritatis ea voluptates consectetur unde pariatur, quam aut voluptatibus explicabo soluta commodi blanditiis labore consequatur, dolores excepturi alias. Similique iusto aut consectetur velit delectus aspernatur minima nostrum ex distinctio cumque exercitationem obcaecati, atque quidem necessitatibus fugit laudantium, eaque illo amet, cupiditate porro corporis! Quia quisquam quis aliquid inventore, id, placeat ipsam tempore et fugit eum sapiente nobis similique molestias rem dolorum culpa reprehenderit ducimus vero itaque labore facilis? Minus harum doloribus eligendi nihil, cupiditate facere consequuntur ea eos vel quos. Quasi quas delectus architecto placeat impedit voluptatibus adipisci repellat ratione provident saepe. Officia voluptatem delectus sunt ipsum corporis quidem consequuntur cumque! Excepturi voluptate ipsa natus doloremque enim quos mollitia accusantium fugiat, officia veritatis recusandae corporis ex voluptates illo neque? Voluptatibus earum veritatis possimus accusamus. Aperiam, excepturi quam provident perferendis quibusdam voluptatum ea consequatur dolorum numquam saepe repellat porro magnam magni. Dolorum quia, accusantium nobis inventore maiores enim! Accusantium illum, fuga, cupiditate pariatur voluptatum a adipisci laborum voluptatibus consectetur eum repellendus explicabo ab assumenda quibusdam expedita laboriosam ex nesciunt at modi incidunt corrupti nobis sed eveniet deserunt. Vitae, quaerat non. Exercitationem, culpa? Iure obcaecati perferendis ut odit quod laudantium illum corporis consequuntur alias natus! Dignissimos fuga explicabo hic ex id voluptate quidem nobis asperiores, earum esse odio corrupti quos recusandae beatae facere voluptates qui voluptatibus voluptas quae aliquid ad quia labore soluta deleniti. Obcaecati optio temporibus corrupti ipsa officia delectus doloremque odit quis. Quam voluptates labore necessitatibus, provident nemo libero aut explicabo vero alias sed, harum in! Odio, dolore culpa veniam commodi vero corrupti suscipit, atque eligendi voluptates praesentium aspernatur asperiores error cum quia voluptas quo, laborum ut ducimus. Totam hic consequatur voluptate, sunt enim vero consectetur officiis aspernatur nulla iste ea rem adipisci! Enim corporis ab cumque modi velit eum, quis quia in ad ratione quo ducimus delectus est recusandae nesciunt aperiam nisi. Nam, fugiat qui molestias nostrum consectetur repellendus aliquid laboriosam nemo sunt deserunt consequuntur ut libero odit explicabo quia eveniet molestiae? Non neque quae deserunt? Nemo temporibus tempora ab eaque fuga repudiandae expedita aut consequatur similique. Dolorum, saepe, assumenda dolores dolore omnis est accusamus, vel magni voluptatem nulla sequi? Eveniet, quaerat numquam? In.
-                    </textarea>
+    <script>
+        @if (session('success'))
+            toaster("success", "Successfully", '{{ session('success') }}');
+        @elseif (session('error'))
+            toaster("error", "Upload Failed", '{{ session('success') }}');
+        @endif
+    </script>
+    <div class="notes_outer">
+        <div class="notes_wapper">
+            <div class="notes_cover">
+                <div class="flex items-center justify-end pr-4">
+                    <button class="modelbtn cursor-pointer rounded-md bg-teal-600 px-5 py-1 text-lg font-bold text-white"
+                        modeltarget="upload_note_form">Upload
+                        Note</button>
+                </div>
+                {{-- {{ $batch_id }} --}}
+                <div id="upload_note_form" class="model_box_wapper">
+                    <div class="model_box_cover">
+                        <h2 class="model_header">Upload Note</h2>
+                        <div class="model_box">
+                            <form action="{{ route('notes.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="text" name="notetitle" id="notetitle" class="w-full"
+                                    placeholder="Enter note title" required><br><br>
+
+                                <select name="batchselect" id="batchselect" class="w-full">
+                                    @foreach ($batch_id as $item)
+                                        {{ $item }}
+                                        <option value="{{ $item->id }}">{{ $item->batch_name }}</option>
+                                    @endforeach
+                                </select><br><br>
+
+                                <input type="file" name="notefile" id="notefile" class="w-full" required><br><br>
+
+                                <div class="flex justify-center">
+                                    <button type="button"
+                                        class="closeModal mr-2 rounded bg-rose-300 px-4 py-2">Cancel</button>
+                                    <button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white">Upload
+                                        Notes</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="note_code line-numbers">
+                    @foreach ($notes as $note)
+                        <div class="mt-6 flex items-center items-center justify-between">
+                            <p class="code_header">{{ $note->title }}</p>
+                            @if (Auth::user()->role === 'admin')
+                                <!-- Delete Button -->
+                                <form action="{{ route('notes.destroy', $note->id) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="rounded bg-red-500 px-4 py-1 text-lg font-bold text-white">Delete</button>
+                                </form>
+                            @endif
+
+                        </div>
+                        @php
+                            $filePath = public_path($note->file_path);
+                            $extension = pathinfo($filePath, PATHINFO_EXTENSION); // Get file extension
+
+                            // Determine the correct language class
+                            $languageClass = match ($extension) {
+                                'html' => 'language-markup',
+                                'css' => 'language-css',
+                                'js' => 'language-js',
+                                default => 'language-plaintext', // Fallback for unknown types
+                            };
+                        @endphp
+
+                        <pre><code class="{{ $languageClass }}" data-prismjs-copy="Copy!">
+                            @php
+                                // echo 'File Path: ' . $filePath . '<br>';
+
+                                if (file_exists($filePath)) {
+                                    $htmlContent = file_get_contents($filePath);
+                                    echo nl2br(e($htmlContent)); // Prevents executing HTML
+                                } else {
+                                    echo 'File not found!';
+                                }
+                            @endphp
+                        </code></pre>
+                    @endforeach
+
+
                 </div>
             </div>
+
         </div>
-    </main>
+    </div>
+
 </x-app-layout>

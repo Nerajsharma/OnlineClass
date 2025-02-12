@@ -19,7 +19,8 @@
                                     placeholder="HTML, CSS, JS" required maxlength="50">
                                 <br>
                                 <input type="file" name="project_file" class="mb-2 rounded border border-slate-600"
-                                    required>
+                                   
+                                required>
                                 <!-- Only zip, html, css, js, etc. allowed -->
 
                                 <div class="flex justify-center">

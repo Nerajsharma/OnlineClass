@@ -9,6 +9,7 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProfileEditController;
+use App\Http\Controllers\NoteController;
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -42,15 +43,19 @@ Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function 
 
     // project
     // Route::get('/dashboard/project', [ProjectController::class, 'index'])->name('project.index');
+// notes
+    Route::post('/dashboard/notes/store', [NoteController::class, 'store'])->name('notes.store');
+    Route::delete('/dashboard/notes/{id}', [NoteController::class, 'destroy'])->name('notes.destroy');
+
 
 
     // update password
     // Route::get('/dashboard/ChangePassword', [ProfileEditController::class, 'updateprofile'])->name('updatepassword.index');
 });
 
-Route::get('/dashboard/notes', function () {
-    return view('admin.notes');
-})->name('notes.index');
+// Route::get('/dashboard/notes', function () {
+//     return view('admin.notes');
+// })->name('notes.index');
 
 
 // for all the user that are log in
@@ -61,6 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/class', [ControlerClasses::class, 'index'])->name('class.index');
     // material
     Route::get('/dashboard/material', [MaterialController::class, 'index'])->name('material.index');
+    // notes
+    Route::get('/dashboard/notes/', [NoteController::class, 'index'])->name('notes.index');
     // project
     Route::get('/dashboard/project', [ProjectController::class, 'index'])->name('project.index');
     // playground

@@ -6,7 +6,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-
 const modelbtns = document.querySelectorAll(".modelbtn");
 
 if (modelbtns) {
@@ -68,3 +67,16 @@ document.querySelectorAll(".closeModal").forEach((btn) => {
 //     toaster("error", "sucess", "i am good");
 //     toaster("info", "Invilit Alet", "Please check email box");
 // }, 3000);
+
+// hamburger
+const hamburger = document.getElementById("hamburger");
+const slide_navbar = document.getElementById("side_navbar");
+if (hamburger) {
+    hamburger.addEventListener("click", (e) => {
+        if (slide_navbar.style.display === "block") {
+            slide_navbar.style.display = "none";
+        } else {
+            slide_navbar.style.display = "block";
+        }
+    });
+}

@@ -53,14 +53,13 @@
         }
     </script>
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/prism.css', 'resources/js/prism.js'])
     {{-- <script src="{{ asset('js/toaster.js') }}"></script> --}}
 </head>
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-blue-900">
         @include('layouts.navigation')
-
         <!-- Page Heading -->
         @if (isset($header))
             <header class="bg-white shadow">
@@ -73,7 +72,8 @@
         <!-- Page Content -->
         <main>
             <div class="flex w-full">
-                <div class="fixed bottom-0 left-0 h-[90vh] w-full bg-blue-900 md:relative md:w-2/12">
+                <div
+                    class="fixed left-0 top-14 z-10 hidden h-auto w-full bg-blue-900 md:relative md:top-0 md:block md:h-[90vh] md:w-2/12" id="side_navbar">
                     <x-slide_navbar />
                 </div>
                 <div class="h-[90vh] w-full rounded-t bg-slate-50 md:w-10/12" id="main_content">

@@ -18,3 +18,4 @@ yarn-error.log
 /.vscode
 DATA_BASE/*
 /public/material/*
+/public/notes/*

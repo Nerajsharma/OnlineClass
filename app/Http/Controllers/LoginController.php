@@ -19,7 +19,7 @@ class LoginController extends Controller
     {
         if ($user->status == 'block') {
             Auth::logout();
-            return redirect()->route('login')->with('error', 'Your account is blocked. Please contact support.');
+            return redirect()->route('login')->with('error', 'Your account is blocked. Please contact to the Admin.');
         }
 
         if ($user->status == 'pending') {

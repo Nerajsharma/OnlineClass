@@ -4,7 +4,7 @@
 
 .list_header div div a {
     margin-bottom: 6px;
-    padding: 4px auto;
+    padding: 8px auto;
     color: white;
     /* background-color: red; */
     transition: 0.2s;
@@ -34,6 +34,7 @@
 }
 .model_box_wapper {
     @apply fixed inset-0 hidden items-center justify-center bg-black bg-opacity-75;
+    z-index: 9999;
 }
 .model_box_cover {
     @apply w-96 overflow-hidden rounded-lg bg-white shadow-lg;
