@@ -37,7 +37,11 @@
                 <div class="mt-10 flex h-full w-full flex-col">
                     {{-- <a href="{{ route('profile.index') }}">Profile</a> --}}
                     {{-- <a href="{{ route('updatepassword.index') }}">Change Password</a> --}}
-                    <a href="">Log out</a>
+                    {{-- <a href="{{ route('logout') }}">Log out</a> --}}
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="w-full px-2 py-2 text-white">Log out</button>
+                    </form>
                 </div>
             </div>
 

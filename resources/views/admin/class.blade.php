@@ -56,8 +56,8 @@
                 </div>
             @endif
             <div class="wrapper">
-                <table class="">
-                    <thead class="">
+                <table class=" w-full overflow-auto">
+                    <thead class=" w-full overflow-auto">
                         <tr class="">
                             <th class="">Class ID</th>
                             <th class="">Batch</th>
@@ -88,6 +88,7 @@
                                         @endif
                                     </td>
                                     <td>
+                                        <div class="flex flex-col md:flex-row gap-2 justify-center"> 
                                         @if ($class->status !== 'ended')
                                             <a href="{{ $class->classlink }}">
                                                 <button class="rounded bg-green-500 px-8 py-1 text-white">Join</button>
@@ -101,6 +102,7 @@
                                         @else
                                             {{ $class->status }}
                                         @endif
+                                        </div>
                                     </td>
                                 </tr>
                             @endif

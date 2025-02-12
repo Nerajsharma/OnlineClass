@@ -46,7 +46,7 @@
                 </div>
                 <div class="note_code line-numbers">
                     @foreach ($notes as $note)
-                        <div class="mt-6 flex items-center items-center justify-between">
+                        <div class="mt-6 flex items-center justify-between">
                             <p class="code_header">{{ $note->title }}</p>
                             @if (Auth::user()->role === 'admin')
                                 <!-- Delete Button -->

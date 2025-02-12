@@ -85,6 +85,7 @@
                                         <td class="py-2">{{ $item->uploaded_by }}</td>
 
                                         <td class="py-2">
+                                            <div class="flex flex-col gap-2"> 
                                             <a href="{{ asset('material/' . $item->material_file) }}" target="_blank">
                                                 <button
                                                     class="mx-1 rounded bg-teal-500 px-4 py-1 hover:bg-teal-600 hover:font-bold">View</button>
@@ -94,6 +95,7 @@
                                                 <button
                                                     class="mx-1 rounded bg-green-500 px-4 py-1 hover:bg-green-600 hover:font-bold">Download</button>
                                             </a>
+                                            </div>
 
                                         </td>
                                     </tr>
