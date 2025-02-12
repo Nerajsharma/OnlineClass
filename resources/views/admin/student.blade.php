@@ -7,10 +7,9 @@
         @endif
     </script>
     <div>
-        <div class="container mx-auto">
+        <div class="container overflow-x-auto overflow-y-hidden">
             <h1 class="text-xl font-bold"> Student's Table</h1>
-            <table
-                class="h-full w-full table-auto border-collapse overflow-hidden rounded-lg bg-gray-50 text-center shadow-md">
+            <table class="h-full w-full table-auto border-collapse rounded-lg bg-gray-50 text-center shadow-md">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="px-6 py-3 text-left text-sm font-medium text-black">Date</th>

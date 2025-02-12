@@ -72,12 +72,12 @@
         <!-- Page Content -->
         <main>
             <div class="flex w-full">
-                <div
-                    class="fixed left-0 top-14 z-10 hidden h-auto w-full bg-blue-900 md:relative md:top-0 md:block md:h-[90vh] md:w-2/12" id="side_navbar">
+                <div class="fixed left-0 top-14 z-10 hidden h-auto w-full bg-blue-900 md:relative md:top-0 md:block md:h-[90vh] md:w-2/12"
+                    id="side_navbar">
                     <x-slide_navbar />
                 </div>
                 <div class="h-[90vh] w-full rounded-t bg-slate-50 md:w-10/12" id="main_content">
-                    <div class="main_content_wapper overflow-y-auto overflow-x-hidden py-6 pl-8 pr-2">
+                    <div class="main_content_wapper overflow-y-auto overflow-x-hidden py-6 pl-4 pr-2 md:pl-8">
                         <div class="main_content_cover">
                             <div class="main_content_outer">
                                 <x-toaster></x-toaster>

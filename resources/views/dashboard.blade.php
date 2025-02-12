@@ -2,7 +2,7 @@
     <div class="dashboard_wapper">
         <div class="dashboard_cover">
             <div class="dashboard_outer">
-                <div class="user_cards w-4/12">
+                <div class="user_cards md:w-4/12 w-fit">
                     <div class="flex items-center gap-3 rounded-xl bg-gray-50 px-4 py-6 shadow-md">
                         <div class="w-4/12">
                             <div>
@@ -16,9 +16,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-8 flex w-full gap-8">
+                <div class="mt-8 flex w-full flex-col gap-8 md:flex-row">
                     @if (Auth::user()->role == 'admin')
-                        <div class="w-fit">
+                        <div class="w-11/12 md:w-fit">
                             <div class="notice_wapper rounded-md bg-slate-100 p-3">
                                 <div class="notice_cover">
                                     <form action="{{ route('notices.store') }}" method="post">
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     @endif
-                    <div class="w-6/12">
+                    <div class="w-11/12 md:w-6/12">
                         <div class="notice_board_wapper">
                             <div class="notice_board_cover">
                                 <div class="notice_board_outer w-full overflow-hidden rounded bg-slate-50">
