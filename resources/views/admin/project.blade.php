@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-
+            <div class="w-full overflow-auto"> 
                 <table>
                     <thead>
                         <tr>
@@ -54,6 +54,7 @@
                                 <td>{{ $project->projectlang }}</td>
                                 <td>{{ $project->uploader_name }}</td>
                                 <td>
+                                    <div class="flex flex-col gap-2 md:flex-row"> 
                                     @php
                                         $filePath = asset($project->project_file); // Corrected file path
                                         $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
@@ -68,12 +69,15 @@
                                     <a href="{{ $filePath }}" download="{{ $project->project_id }}"
                                         class="mx-2 rounded bg-lime-500 px-6 py-2 font-bold text-white">Download</a>
                                     <a href=""
-                                        class="rounded bg-rose-500 px-6 py-2 font-bold text-white">Delete</a>
+                                        class="rounded bg-rose-500 px-6 py-2 font-bold text-white">Delete
+                                    </a>
+                                    </div>
                                 </td>
                             </tr>
                     </tbody>
                     @endforeach
                 </table>
+            </div>
 
 
             </div>

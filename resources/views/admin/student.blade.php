@@ -37,6 +37,7 @@
                                 {{ $user->status }}</td>
                             <td class="p-1 text-sm text-black">{{ $user->cource }}</td>
                             <td class="p-1 text-sm">
+                                <div class="flex flex-col gap-2"> 
                                 @if ($user->status == 'block' || $user->status == 'pending')
                                     <form action="{{ route('users.approve', $user->id) }}" method="POST"
                                         class="inline">
@@ -54,6 +55,7 @@
                                 <a href="{{ route('users.edit', $user->id) }}">
                                     <button class="rounded bg-green-500 px-4 py-2 text-white">Edit </button>
                                 </a>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

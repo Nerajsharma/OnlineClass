@@ -19,3 +19,4 @@ yarn-error.log
 DATA_BASE/*
 /public/material/*
 /public/notes/*
+/public/project/*

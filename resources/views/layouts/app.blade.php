@@ -77,7 +77,7 @@
                     <x-slide_navbar />
                 </div>
                 <div class="h-[90vh] w-full rounded-t bg-slate-50 md:w-10/12" id="main_content">
-                    <div class="main_content_wapper overflow-y-auto overflow-x-hidden py-6 pl-4 pr-2 md:pl-8">
+                    <div class="main_content_wapper overflow-y-auto  py-6 pl-4 pr-2 md:pl-8">
                         <div class="main_content_cover">
                             <div class="main_content_outer">
                                 <x-toaster></x-toaster>
