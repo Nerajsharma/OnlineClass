@@ -58,6 +58,11 @@
 </head>
 
 <body class="font-sans antialiased">
+    {{-- pre loader --}}
+<div class="preloader_wapper h-full w-full bg-slate-500 text-white text-3xl z-20 fixed top-0 left-0 text-center " id="preloader">
+    <div class="preloader pt-[20%]">Loading</div>
+</div>
+
     <div class="min-h-screen bg-blue-900">
         @include('layouts.navigation')
         <!-- Page Heading -->

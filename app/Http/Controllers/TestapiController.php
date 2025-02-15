@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Notice;
-use Illuminate\Support\Facades\Auth;
 use App\Helpers\MailHelper;
 use App\Models\User;
-class NoticeController extends Controller
+class TestapiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +14,16 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $notices = Notice::latest()->get();
+        $users = User::all();
+        $title = "Important Update"; // Email Title
+        $messageBody = "We have an exciting update for you! Stay tuned for more."; // Email Body
 
-        // Pass notices to the view
-        return view('dashboard', compact('notices', 'user'));
+        foreach ($users as $user) {
+            MailHelper::sendEmailToUser($user->email, $title, $messageBody);
+        }
 
+        // return "Emails sent!";   
+        // return view('emails.sendToAllUsers');
     }
 
     /**
@@ -42,27 +44,7 @@ class NoticeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'notice_title' => 'required|string|max:255',
-            'notice_message' => 'required|string',
-        ]);
-
-        // Save the notice
-        Notice::create([
-            'title' => $request->notice_title,
-            'message' => $request->notice_message,
-        ]);
-
-        $users = User::All();
-        $title = "Notice Uploaded";
-
-        foreach ($users as $user) {
-            MailHelper::sendEmailToUser($user->email, $title, "hey ".$user->name .", Some Important Notice Has Been Published On the Website or App..Please Check it..Don't Miss It.");
-        }
-
-        // Redirect or return success response
-        return redirect()->back()->with('success', 'Notice published successfully!');
-
+        //
     }
 
     /**

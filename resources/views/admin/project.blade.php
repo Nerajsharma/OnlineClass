@@ -10,7 +10,7 @@
                     <div class="model_box_cover">
                         <h2 class="model_header">Upload project </h2>
                         <div class="model_box">
-                            <form action="{{ route('project.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="text" name="projectname" class="mb-4 w-full rounded"
                                     placeholder="Enter Project Name" required maxlength="25">
@@ -43,6 +43,7 @@
                             <th>Project Name</th>
                             <th>Language</th>
                             <th>Uploader</th>
+                            <th>Date</th>
                             <th>File</th>
                         </tr>
                     </thead>
@@ -53,6 +54,7 @@
                                 <td>{{ $project->projectname }}</td>
                                 <td>{{ $project->projectlang }}</td>
                                 <td>{{ $project->uploader_name }}</td>
+                                <td>{{ $project->created_at }}</td>
                                 <td>
                                     <div class="flex flex-col gap-2 md:flex-row"> 
                                     @php

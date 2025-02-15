@@ -10,6 +10,7 @@ use App\Http\Controllers\BatchController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\TestapiController;
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -59,7 +60,7 @@ Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function 
 
 
 // for all the user that are log in
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => ['auth', 'check.status']], function () {
     // dashboard
     Route::get('/dashboard', [NoticeController::class, 'index'])->name('dashboard.index');
     // class
@@ -87,5 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+// --------------Test api ----------------
+Route::get('/testapi', [TestapiController::class, 'index'])->name('profile.destroy');
 
 require __DIR__ . '/auth.php';

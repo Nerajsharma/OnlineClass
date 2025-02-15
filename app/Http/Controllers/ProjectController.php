@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use App\Helpers\MailHelper;
+use App\Models\User;
+
 
 class ProjectController extends Controller
 {
@@ -78,6 +81,14 @@ class ProjectController extends Controller
             'projectlang' => $request->projectlang,
             'project_file' => $filepath,
         ]);
+
+        $admins = User::where('role', 'admin')->get();
+        $title = "Project Upload";
+        $messageBody = "Hey Admin ". Auth::user()->name ." Have Uploaded Project With Project Id : ". $uniqueProjectID ." On Your Website Or On A App..Please Check...";
+
+        foreach ($admins as $user) {
+            MailHelper::sendEmailToUser($user->email, $title, $messageBody);
+        }
 
         return back()->with('success', 'Project uploaded successfully!');
 
