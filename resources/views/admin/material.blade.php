@@ -58,7 +58,9 @@
                                     <th class="py-3">File Name</th>
                                     <th class="py-3">Upload date</th>
                                     <th class="py-3">Size</th>
+                                    @if (Auth::user()->role === 'admin')
                                     <th class="py-3">Batch</th>
+                                    @endif
                                     <th class="py-3">Upload By</th>
                                     <th class="py-3"></th>
                                 </tr>
@@ -70,28 +72,30 @@
                                         <td class="py-2">{{ $item->material_name }}</td>
                                         <td class="py-2">{{ $item->created_at->format('d M Y') }}</td>
                                         <td class="py-2">{{ $item->file_size }}</td>
+                                        @if (Auth::user()->role === 'admin')
                                         <td class="py-2">
                                             @php
                                                 // Ensure material_cource is a string before decoding
                                                 $batchIds = is_array($item->material_cource)
                                                     ? $item->material_cource
                                                     : json_decode($item->material_cource, true);
-                                                $batches = \App\Models\Batch::whereIn('id', (array) $batchIds)
+                                                    $batches = \App\Models\Batch::whereIn('id', (array) $batchIds)
                                                     ->pluck('batch_name')
                                                     ->implode(', ');
-                                            @endphp
+                                                    @endphp
                                             {{ $batches }}
                                         </td>
+                                        @endif
                                         <td class="py-2">{{ $item->uploaded_by }}</td>
 
-                                        <td class="py-2">
-                                            <div class="flex flex-col gap-2"> 
-                                            <a href="{{ asset('material/' . $item->material_file) }}" target="_blank">
+                                        <td class="py-2 w-fit">
+                                            <div class="flex w-fit flex-col md:flex-row"> 
+                                            <a href="{{ asset('material/' . $item->material_file) }}" class="w-fit mb-3 mr-2" target="_blank">
                                                 <button
                                                     class="mx-1 rounded bg-teal-500 px-4 py-1 hover:bg-teal-600 hover:font-bold">View</button>
                                             </a>
                                             <a href="{{ asset('material/' . $item->material_file) }}"
-                                                download="{{ now()->format('Ymd_His') . '_' . $item->material_name }}">
+                                                download="{{ now()->format('Ymd_His') . '_' . $item->material_name }}" class="w-fit">
                                                 <button
                                                     class="mx-1 rounded bg-green-500 px-4 py-1 hover:bg-green-600 hover:font-bold">Download</button>
                                             </a>

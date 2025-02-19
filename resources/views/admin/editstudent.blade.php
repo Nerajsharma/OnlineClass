@@ -1,4 +1,11 @@
 <x-app-layout>
+    <script>
+        @if (session('success'))
+            toaster("success", "Successfully", '{{ session('success') }}');
+        @elseif (session('error'))
+            toaster("error", "Upload Failed", '{{ session('success') }}');
+        @endif
+    </script>
     <div class="editstudent_wapper">
         <div class="editstudent_cover">
             <div class="container mx-auto mt-5">

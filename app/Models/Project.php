@@ -9,5 +9,11 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['project_id', 'uploader_name', 'projectname', 'projectlang', 'project_file'];
+    protected $fillable = ['project_id', 'uploader_id', 'projectname', 'projectlang', 'project_file','projectmode'];
+
+    public function uploader()
+    {
+        return $this->belongsTo(User::class, 'uploader_id');
+    }
+
 }

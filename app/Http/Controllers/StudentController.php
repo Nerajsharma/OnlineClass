@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Batch;
+use App\Helpers\MailHelper;
+
 class StudentController extends Controller
 {
     /**
@@ -86,6 +88,11 @@ class StudentController extends Controller
         $user = User::findOrFail($id);
         $user->update($request->all());
 
+        $admin = User::where('id', $id)->first();
+        $title = "Account Update";
+        $messageBody = "Hey ".$admin->name ." , You Account " . $admin->email . " has been Update.";
+            MailHelper::sendEmailToUser($admin->email, $title, $messageBody);
+
         return redirect()->route('student.index')->with('success', 'User details updated successfully.');
     }
 
@@ -105,6 +112,11 @@ class StudentController extends Controller
         $user->status = 'active';
         $user->save();
 
+        $admin = User::where('id', $id)->first();
+        $title = "Account Approved";
+        $messageBody = "Hey " . $admin->name . " , You Account ". $admin->email ." has been Approved.";
+        MailHelper::sendEmailToUser($admin->email, $title, $messageBody);
+
         return redirect()->back()->with('success', 'User approved successfully!');
     }
 
@@ -113,6 +125,11 @@ class StudentController extends Controller
         $user = User::findOrFail($id);
         $user->status = 'block';
         $user->save();
+
+        $admin = User::where('id', $id)->first();
+        $title = "Account Blocked";
+        $messageBody = "Hey " . $admin->name . " , You Account ". $admin->email ." has been Blocked.Please Contact the Admin to approve the account Soon...";
+        MailHelper::sendEmailToUser($admin->email, $title, $messageBody);
 
         return redirect()->back()->with('success', 'User blocked successfully!');
     }

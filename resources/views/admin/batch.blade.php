@@ -2,6 +2,8 @@
     <script>
         @if (session('success'))
             toaster("success", "Successfully", '{{ session('success') }}');
+        @elseif (session('error'))
+            toaster("error", "Upload Failed", '{{ session('success') }}');
         @endif
     </script>
 
@@ -15,7 +17,7 @@
                 </div>
 
                 <div id="addbatchform" class="model_box_wapper">
-                    <div class="model_box_cover ">
+                    <div class="model_box_cover">
                         <h2 class="model_header">Add Batches</h2>
                         <div class="model_box">
                             <form action="{{ route('batches.store') }}" method="post">
@@ -48,10 +50,10 @@
                     </div>
                 </div>
 
-                <div class="batch_table w-full overflow-auto ">
+                <div class="batch_table w-full overflow-auto">
                     <div class="batch_table_cover">
-                        <table class="mt-6 w-full border-collapse  rounded-md bg-slate-100 text-center">
-                            <thead class=" rounded-t-md bg-slate-300">
+                        <table class="mt-6 w-full border-collapse rounded-md bg-slate-100 text-center">
+                            <thead class="rounded-t-md bg-slate-300">
                                 <tr class="">
                                     <th class="py-3">Code</th>
                                     <th class="py-3">Created At</th>
@@ -66,7 +68,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($batches as $batch)
+                                @forelse ($batchets as $batch)
                                     <tr class="border-b border-b-slate-300">
                                         <td class="py-2">{{ $batch->id }}</td>
                                         <td class="py-2">{{ $batch->created_at }}</td>
@@ -79,19 +81,24 @@
                                         <td class="py-2">Neeraj</td>
                                         <td class="py-2">2081-10-15 10:15:15</td> --}}
                                         <td class="py-2">
-                                            <div class=" flex flex-col gap-2"> 
-                                            <a href="{{ route('batches.viewdetails', ['id' => $batch->id]) }}">
-                                                <button
-                                                    class="mx-1 rounded bg-teal-500 px-4 py-1 hover:bg-teal-600 hover:font-bold">
-                                                    View
-                                                </button>
-                                            </a>
-                                            {{-- <button
+                                            <div class="flex flex-col gap-2">
+                                                <a href="{{ route('batches.viewdetails', ['id' => $batch->id]) }}">
+                                                    <button
+                                                        class="mx-1 rounded bg-teal-500 px-4 py-1 hover:bg-teal-600 hover:font-bold">
+                                                        View
+                                                    </button>
+                                                </a>
+                                                {{-- <button
                                                 class="mx-1 rounded bg-amber-300 px-4 py-1 hover:bg-amber-600 hover:font-bold">Link</button> --}}
-                                            <a href="">
-                                                <button
-                                                    class="mx-1 rounded bg-rose-500 px-4 py-1 hover:bg-rose-600 hover:font-bold">Delete</button>
-                                            </a>
+                                                <form action="{{ route('batches.destroy', $batch->id) }}" method="POST"
+                                                    onsubmit="return confirm('Are you sure you want to delete this batch?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="mx-1 rounded bg-rose-500 px-4 py-1 hover:bg-rose-600 hover:font-bold">
+                                                        Delete
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

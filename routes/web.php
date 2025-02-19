@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function 
     Route::get('/dashboard/Batch', [BatchController::class, 'index'])->name('batch.index');
     Route::post('/dashboard/batches/store', [BatchController::class, 'store'])->name('batches.store');
     Route::get('/dashboard/batches/view-details/{id}', [BatchController::class, 'view'])->name('batches.viewdetails');
+    Route::delete('/dashboard/batches/{id}', [BatchController::class, 'destroy'])->name('batches.destroy');
 
     // class
     Route::post('/dashboard/class', [ControlerClasses::class, 'store'])->name('classes.store');
@@ -43,6 +44,9 @@ Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function 
     Route::post('/dashboard/materials/store', [MaterialController::class, 'store'])->name('materials.store');
 
     // project
+    Route::delete('/project/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    Route::post('/projects/extract/{project_id}', [ProjectController::class, 'extractZip'])->name('projects.extract');
+
     // Route::get('/dashboard/project', [ProjectController::class, 'index'])->name('project.index');
 // notes
     Route::post('/dashboard/notes/store', [NoteController::class, 'store'])->name('notes.store');
@@ -71,6 +75,8 @@ Route::group(['middleware' => ['auth', 'check.status']], function () {
     Route::get('/dashboard/notes/', [NoteController::class, 'index'])->name('notes.index');
     // project
     Route::get('/dashboard/project', [ProjectController::class, 'index'])->name('project.index');
+    Route::get('/projects/download/{project_id}', [ProjectController::class, 'downloadProject'])->name('projects.download');
+
     // playground
     Route::get('/dashboard/playground', function () {
         return view('admin.playground');

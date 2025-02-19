@@ -1,4 +1,11 @@
 <x-app-layout>
+    <script>
+        @if (session('success'))
+            toaster("success", "Successfully", '{{ session('success') }}');
+        @elseif (session('error'))
+            toaster("error", "Upload Failed", '{{ session('success') }}');
+        @endif
+    </script>
     <div class="cover">
         <div class="outer">
             @if (Auth::user()->role == 'admin')
@@ -56,29 +63,31 @@
                 </div>
             @endif
             <div class="wrapper">
+                 @php
+                            $user = Auth::user();
+                            $role = $user->role;
+                            $usercource = $user->cource;
+                        @endphp
                 <table class=" w-full overflow-auto">
                     <thead class=" w-full overflow-auto">
                         <tr class="">
                             <th class="">Class ID</th>
+                            @if ($role==='admin')
                             <th class="">Batch</th>
+                            @endif
                             <th class="">Start Date</th>
                             <th class="">End Date</th>
                             <th class="">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        @php
-                            $user = Auth::user();
-                            $role = $user->role;
-                            $usercource = $user->cource;
-                        @endphp
-
                         @foreach ($meet as $class)
                             @if ($class['link_batch'] === $usercource || $role === 'admin')
                                 <tr>
                                     <td>{{ str_pad($class['id'], 4, '0', STR_PAD_LEFT) }}</td>
+                                    @if ($role==='admin')
                                     <td>{{ $class['link_batch'] }}</td>
+                                    @endif
                                     <td>{{ $class->starttime }}</td>
                                     <td>
                                         @if ($class->status === 'active')

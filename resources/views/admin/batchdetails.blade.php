@@ -1,7 +1,9 @@
 <x-app-layout>
     <script>
-        @if (session('error'))
-            toaster('error', 'Error', {{ session('error') }})
+        @if (session('success'))
+            toaster("success", "Successfully", '{{ session('success') }}');
+        @elseif (session('error'))
+            toaster("error", "Upload Failed", '{{ session('success') }}');
         @endif
     </script>
     <div class="bath_details">

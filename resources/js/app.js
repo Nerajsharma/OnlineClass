@@ -84,3 +84,22 @@ if (hamburger) {
 window.onload = function() {
     document.getElementById('preloader').style.display = 'none';
 };
+document.querySelectorAll('button[type="submit"]').forEach((submitBtn) => {
+    submitBtn.addEventListener('click', (event) => {
+        document.getElementById("preloader").style.display = "flex"; // Show preloader
+    });
+});
+document.querySelectorAll(".projectcopylink").forEach((button) => {
+    button.addEventListener("click", function () {
+        var linkToCopy = this.getAttribute("copydata");
+
+        navigator.clipboard
+            .writeText(linkToCopy)
+            .then(() => {
+                toaster('success',"link Copied","Link Copied Sucessfully..")
+            })
+            .catch((err) => {
+                toaster('error',"link Copied Failed","Link Copied Failed..")
+            });
+    });
+});
