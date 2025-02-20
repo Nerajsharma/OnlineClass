@@ -33,6 +33,9 @@
                     <a href="{{ route('whiteboard.index') }}" class="py-1">
                        <i class="nb nb_image"></i> Whiteboard
                     </a>
+                    <a href="{{route('questions.index')}}" class="py-1">
+                       <i class="nb nb_question"></i> Q&N/Douts
+                    </a>
                 </div>
                 <div class="mt-10 flex h-full w-full flex-col">
                     <a href="{{ route('profile.edit') }}"><i class="nb nb_gears"></i> Profile</a>

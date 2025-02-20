@@ -11,6 +11,9 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\TestapiController;
+use App\Http\Controllers\QuestionController;
+
+
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -88,7 +91,12 @@ Route::group(['middleware' => ['auth', 'check.status']], function () {
     })->name('whiteboard.index');
     // project
     Route::post('/project/store', [ProjectController::class, 'store'])->name('project.store');
-
+// qna
+    // Route::get('/dashboard/qna-douts', function () {
+    //     return view('admin.douts');
+    // });
+    Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
+    Route::post('/ask-question/{parent_id?}', [QuestionController::class, 'store'])->name('ask-question');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
