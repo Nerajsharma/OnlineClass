@@ -141,8 +141,8 @@
                                                 <sup
                                                     class="ml-[2px] h-fit rounded bg-orange-300 p-[4px] text-orange-700"><i
                                                         class="nb nb_unlocked1"></i></sup>
-                                            @endif
-                                            {{ $project->project_id }}
+                                                        @endif
+                                                        {{ $project->project_id }}
                                         </td>
                                         <td>{{ $project->projectname }}</td>
                                         <td>{{ $project->projectlang }}</td>
