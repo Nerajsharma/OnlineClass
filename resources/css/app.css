@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{ /* light thems defult */
+    ---bg-black:rgb(5, 11, 44);
+    ---text-black:black;  
+    ---text-white:white;
+    ---bg-white:white;
+}
+.dark-them{ /*Dark */
+    ---text-white:black;
+    ---bg-white:rgb(2, 7, 32);
+    ---bg-black:white;
+    ---text-black:white;
+}
+.bg-gray-50{
+    background-color:var(---bg-white) ;
+}
+.text-gray-600{
+    color: var(---bg-black);
+}
+.copy-link-btn
 .list_header div div a {
     margin-bottom: 6px;
     padding: 8px auto;

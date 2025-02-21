@@ -53,7 +53,7 @@
                         </form>
                     </x-slot>
                 </x-dropdown>
-
+                <button class="text-2xl cursor-pointer px-1 py-1" id="themsbtn"><i class="nb nb_moon"></i></button>
             </div>
 
             <!-- Hamburger -->
