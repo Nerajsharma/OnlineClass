@@ -36,7 +36,7 @@
                                 class="@if ($user->status == 'active') bg-green-200 @elseif ($user->status == 'pending') bg-yellow-200 @elseif ($user->status == 'block') bg-red-200 @endif p-1 text-sm font-bold capitalize text-black">
                                 {{ $user->status }}</td>
                             <td class="p-1 text-sm text-black">{{ $user->cource }}</td>
-                            <td class="p-1 text-sm">
+                            <td class="p-1 text-sm text-black">
                                 <div class="flex flex-col gap-2"> 
                                 @if ($user->status == 'block' || $user->status == 'pending')
                                     <form action="{{ route('users.approve', $user->id) }}" method="POST"

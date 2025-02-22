@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\classes;
+use App\Models\User;
+use App\Helpers\MailHelper;
+
 
 class ControlerClasses extends Controller
 {
@@ -51,6 +54,20 @@ class ControlerClasses extends Controller
         $class->status = $request->status ?? 'active';
         $class->save();
 
+        $users = User::all();
+        $title = "🎉 Class Started – Join Now!";
+        $messageBody = "
+    We are excited to announce that our live class has officially started! 🚀  
+    Please join now and be ready for an interactive and engaging learning experience.  
+    Don't wait! Join within the next 10 minutes to make the most of it.
+
+    Make sure to be on time and come prepared! If you have any questions, feel free to reach out.
+
+    See you in class!.."
+;
+        foreach ($users as $user) {
+            MailHelper::sendEmailToUser($user->email, $title, $messageBody);
+        }
         return redirect()->back()->with('success', 'Class added successfully!');
     }
 

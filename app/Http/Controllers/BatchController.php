@@ -14,14 +14,14 @@ class BatchController extends Controller
      */
     public function index()
     {
-        $batches = Batch::all();
+        $batchets = Batch::all();
 
         // Count students based on batch_name column in users table
         $bathcstd = User::select('cource')
             ->selectRaw('COUNT(*) as student_count')
             ->groupBy('cource')
             ->pluck('student_count', 'cource');
-        return view('admin.batch', compact('batches', 'bathcstd'));
+        return view('admin.batch', compact('batchets', 'bathcstd'));
     }
 
     /**
@@ -96,7 +96,10 @@ class BatchController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $batch = Batch::findOrFail($id);
+        $batch->delete();
+
+        return redirect()->back()->with('success', 'Batch deleted successfully.');
     }
     public function view($id)
     {

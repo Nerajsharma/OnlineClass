@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{ /* light thems defult */
+    ---bg-black:rgb(5, 11, 44);
+    ---text-black:black;  
+    ---text-white:white;
+    ---bg-white:white;
+    ---bg-slate:white;
+}
+.dark-them{ /*Dark */
+    ---text-white:black;
+    ---bg-white:rgb(2, 7, 32);
+    ---bg-black:white;
+    ---text-black:white;
+    ---bg-slate:white;
+
+}
+.bg-gray-50{
+    background-color:var(---bg-black) ;
+}
+.bg-gray-50{
+    background-color:var(---bg-white) ;
+}
+.text-gray-600{
+    color: var(---bg-black);
+}
+.bg-slate-100{
+    background-color: var(---bg-white);
+}
+.bg-slate-300{
+    background-color: var(---bg-white);
+}
+.bg-gray-100{
+    background-color:var(---bg-white) ;
+}
+ 
+.text-black{
+    color: var(---bg-black);
+}
+
+.copy-link-btn
 .list_header div div a {
     margin-bottom: 6px;
     padding: 8px auto;
@@ -34,7 +73,7 @@
 }
 .model_box_wapper {
     @apply fixed inset-0 hidden items-center justify-center bg-black bg-opacity-75;
-    z-index: 9999;
+    z-index: 9;
 }
 .model_box_cover {
     @apply w-96 overflow-hidden rounded-lg bg-white shadow-lg;
@@ -166,7 +205,28 @@ table tbody tr {
     @apply border-b border-b-slate-300;
 }
 table tbody tr td {
-    @apply py-2;
+    @apply py-2 text-center;
+}
+.copy-link-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.copy-link-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.copy-link-btn:active {
+    background-color: #3e8e41;
+    transform: scale(1);
 }
 
 

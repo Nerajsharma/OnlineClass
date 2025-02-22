@@ -9,15 +9,17 @@
     <div class="notes_outer">
         <div class="notes_wapper">
             <div class="notes_cover">
+                @if (Auth::user()->role === 'admin')
                 <div class="flex items-center justify-end pr-4">
                     <button class="modelbtn cursor-pointer rounded-md bg-teal-600 px-5 py-1 text-lg font-bold text-white"
-                        modeltarget="upload_note_form">Upload
-                        Note</button>
+                    modeltarget="upload_note_form">Upload
+                    Note</button>
                 </div>
+                @endif
                 {{-- {{ $batch_id }} --}}
                 <div id="upload_note_form" class="model_box_wapper">
                     <div class="model_box_cover">
-                        <h2 class="model_header">Upload Note</h2>
+                        <h2 class="model_header ">Upload Note</h2>
                         <div class="model_box">
                             <form action="{{ route('notes.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf

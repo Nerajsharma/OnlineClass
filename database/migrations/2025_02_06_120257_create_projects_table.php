@@ -10,13 +10,15 @@ return new class extends Migration {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('project_id')->unique(); // Unique Project ID
-            $table->string('uploader_name'); // Store uploader's name
+            $table->foreignId('uploader_id')->constrained('users')->onDelete('cascade'); // Link to users table
             $table->string('projectname');
             $table->string('projectlang');
             $table->string('project_file'); // File path
+            $table->string('projectmode'); // File path
             $table->timestamps();
         });
     }
+
 
     public function down()
     {

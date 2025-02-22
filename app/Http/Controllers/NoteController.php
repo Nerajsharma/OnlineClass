@@ -7,6 +7,7 @@ use App\Models\Note;
 use App\Models\Batch;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class NoteController extends Controller
 {
@@ -109,7 +110,7 @@ class NoteController extends Controller
         $note = Note::findOrFail($id);
 
         // Delete the file from public/material
-        $filePath = public_path($note->file_path);
+        $filePath = public_path('notes/' . $note->file_path);
         if (File::exists($filePath)) {
             File::delete($filePath);
         }

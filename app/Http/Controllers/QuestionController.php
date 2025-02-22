@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Notice;
 use Illuminate\Support\Facades\Auth;
-use App\Helpers\MailHelper;
 use App\Models\User;
-class NoticeController extends Controller
+use App\Models\Question;
+use App\Helpers\MailHelper;
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +16,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $notices = Notice::latest()->get();
-
-        // Pass notices to the view
-        return view('dashboard', compact('notices', 'user'));
-
+        $questions = Question::whereNull('parent_id')->with('replies')->latest()->get();
+        return view('admin.douts', compact('questions'));
     }
 
     /**
@@ -40,30 +36,32 @@ class NoticeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $parent_id = null)
     {
         $request->validate([
-            'notice_title' => 'required|string|max:255',
-            'notice_message' => 'required|string',
+            'askquestion' => 'required|string',
         ]);
 
-        // Save the notice
-        Notice::create([
-            'title' => $request->notice_title,
-            'message' => $request->notice_message,
+        // Store the question
+        Question::create([
+            'user_id' => auth()->id(),
+            'question' => $request->askquestion,
+            'parent_id' => $parent_id, // Parent ID from URL
         ]);
 
-        $users = User::All();
-        $title = "Notice Uploaded";
+        // Fetch all users (admins + regular users)
+        $users = User::all();
+        $title = "New Question";
+        $messageBody = "Hey " . Auth::user()->name . ", a new question or answer has been uploaded. Please check and share your thoughts.";
 
+        // Send email to each user
         foreach ($users as $user) {
-            MailHelper::sendEmailToUser($user->email, $title, "hey ".$user->name .", Some Important Notice Has Been Published On the Website or App..Please Check it..Don't Miss It.");
+            MailHelper::sendEmailToUser($user->email, $title, $messageBody);
         }
 
-        // Redirect or return success response
-        return redirect()->back()->with('success', 'Notice published successfully!');
-
+        return redirect()->back()->with('success', 'Your question has been submitted.');
     }
+
 
     /**
      * Display the specified resource.

@@ -12,7 +12,7 @@
                         </div>
                         <div class="w-8/12">
                             <p class="username font-bold capitalize text-gray-600">{{ $user->name }}</p>
-                            <p class="username text-wrap w-full text-sm font-bold text-gray-400">{{ $user->email }}</p>
+                            <p class="username w-full text-wrap text-sm font-bold text-gray-400">{{ $user->email }}</p>
                         </div>
                     </div>
                 </div>
@@ -23,12 +23,11 @@
                                 <div class="notice_cover w-full">
                                     <form action="{{ route('notices.store') }}" method="post">
                                         @csrf
-                                        <label for="notice_title" class="font-bold">Title:</label><br>
+                                        <label for="notice_title" class="font-bold text-black">Title:</label><br>
                                         <input type="text" name="notice_title" id="notice_title"
                                             placeholder="Enter Title" required class="w-full"> <br>
-                                        <label for="notice_message" class="font-bold">Notice:</label><br>
-                                        <textarea name="notice_message" id="notice_message" placeholder="Enter Notice"
-                                            class="resize-none w-full h-48 ">
+                                        <label for="notice_message" class="font-bold text-black">Notice:</label><br>
+                                        <textarea name="notice_message" id="notice_message" placeholder="Enter Notice" class="h-48 w-full resize-none">
                                         </textarea>
                                         <br>
                                         <button type="submit"
@@ -74,3 +73,4 @@
         </div>
     </div>
 </x-app-layout>
+

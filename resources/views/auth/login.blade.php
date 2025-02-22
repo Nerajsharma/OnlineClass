@@ -35,24 +35,23 @@
                 <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
         </div>
-
-        <div class="mt-4 flex items-center justify-center">
+        <x-primary-button class="w-full text-center bg-green-700 justify-center font-bold mt-3 text-base">
+            {{ __('Log in') }}
+        </x-primary-button>
+        
+        <div class="mt-2 flex items-center justify-center">
+            <a class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                href="/register">
+                {{ __('Create a new account ?') }}
+            </a>
+        </div>
+        <div class="mt-1 flex items-center justify-center">
             @if (Route::has('password.request'))
                 <a class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
-
-            <x-primary-button class="ml-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-        <div class="">
-            <a class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                href="/register">
-                {{ __('Create a new account ?') }}
-            </a>
         </div>
     </form>
 </x-guest-layout>

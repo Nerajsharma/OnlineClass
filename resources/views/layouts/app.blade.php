@@ -58,6 +58,14 @@
 </head>
 
 <body class="font-sans antialiased">
+    {{-- pre loader --}}
+<div class="preloader_wapper h-[100vh] w-[100vw] bg-slate-800 bg-opacity-75 text-white text-3xl z-20 fixed top-0 left-0 text-center flex justify-center items-center" id="preloader">
+    <div class="preloader bg-white rounded p-8 text-black font-serif flex justify-center items-center flex-col">
+        <img src="{{asset('upload/preloader.gif')}}" class="w-[150px] h-auto" alt="">
+        <p class="text-md">Fetching Data...</p>
+    </div>
+</div>
+
     <div class="min-h-screen bg-blue-900">
         @include('layouts.navigation')
         <!-- Page Heading -->

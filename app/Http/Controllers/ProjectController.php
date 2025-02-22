@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use App\Helpers\MailHelper;
+use App\Models\User;
+use Illuminate\Support\Facades\Response;
+use ZipArchive;
 
 class ProjectController extends Controller
 {
@@ -18,7 +22,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::All();
+        $projects = Project::with('uploader')->get();
+        // return view('projects.index', compact('projects'));
         return view('admin.project', compact('projects'));
     }
 
@@ -55,17 +60,17 @@ class ProjectController extends Controller
 
         // Ensure directory exists
         if (!File::exists($projectFolder)) {
-            File::makeDirectory($projectFolder, 0777, true, true);
+            File::makeDirectory($projectFolder, 0755, true, true);
         }
 
         // Handle file upload
         if ($request->hasFile('project_file')) {
             $file = $request->file('project_file');
-            $filename = time() . '_' . $file->getClientOriginalName();
+            $filename = $file->getClientOriginalName();
             $file->move($projectFolder, $filename); // Move file to the folder
 
             // Save the relative file path
-            $filepath = "Project/$uniqueProjectID/$filename";
+            // $filepath = "Project/$uniqueProjectID/";
         } else {
             $filepath = null;
         }
@@ -73,11 +78,20 @@ class ProjectController extends Controller
         // Save to database
         Project::create([
             'project_id' => $uniqueProjectID,
-            'uploader_name' => Auth::user()->name, // Store uploader's name
+            'uploader_id' => Auth::user()->id, // Store uploader's name
             'projectname' => $request->projectname,
             'projectlang' => $request->projectlang,
-            'project_file' => $filepath,
+            'project_file' => $filename,
+            'projectmode'=> $request->projectmode,
         ]);
+
+        $admins = User::where('role', 'admin')->get();
+        $title = "Project Upload";
+        $messageBody = "Hey Admin " . Auth::user()->name . " Have Uploaded Project With Project Id : " . $uniqueProjectID . " On Your Website Or On A App..Please Check...";
+
+        foreach ($admins as $user) {
+            MailHelper::sendEmailToUser($user->email, $title, $messageBody);
+        }
 
         return back()->with('success', 'Project uploaded successfully!');
 
@@ -125,6 +139,98 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        // Define the correct folder path inside the public/project directory
+        $folderPath = public_path('project/' . $project->project_id);
+
+        // Debugging: Check if the correct path is generated
+        echo $folderPath;
+
+        // Check if the folder exists and delete it
+        if (File::exists($folderPath) && File::isDirectory($folderPath)) {
+            File::deleteDirectory($folderPath);
+        }
+        // dd($folderPath, File::exists($folderPath), File::isDirectory($folderPath));
+        // Delete the project record from the database
+        $project->delete();
+
+        return redirect()->back()->with('success', 'Project deleted successfully!');
+    }
+    public function extractZip($projectId)
+    {
+        $project = Project::findOrFail($projectId);
+
+        // Define the path to the ZIP file and the folder for extraction
+        $zipPath = public_path('project/' . $project->project_id . '/' . $project->project_file);
+        $extractPath = public_path('project/' . $project->project_id . '/');
+
+        // Debugging step: Check if paths are correct
+        // dd([
+        //     'zipPath' => $zipPath,
+        //     'extractPath' => $extractPath,
+        //     'fileExists' => File::exists($zipPath),
+        //     'isDirectory' => File::isDirectory($extractPath),
+        // ]);
+
+        // Check if the ZIP file exists
+        if (File::exists($zipPath)) {
+            $zip = new ZipArchive;
+
+            // Try to open the ZIP file
+            $openResult = $zip->open($zipPath);
+
+            if ($openResult === TRUE) {
+                // Extract the contents to the specified folder
+                $zip->extractTo($extractPath);
+                $zip->close();
+
+                return redirect()->back()->with('success', 'File extracted successfully!');
+            } else {
+                return redirect()->back()->with('error', 'Failed to File extracted!');
+                // dd([
+                    //     'zipPath' => $zipPath,
+                    //     'error' => $openResult,
+                    // ]);
+                }
+            } else {
+            return redirect()->back()->with('error', 'Zip File not found!');
+            // dd([
+            //     'zipPath' => $zipPath,
+            //     'error' => 'ZIP file not found.',
+            // ]);
+        }
+
+    }
+    public function downloadProject($projectId)
+    {
+        // Retrieve project by ID
+        $project = Project::findOrFail($projectId);
+
+        // Define paths
+        $projectFolder = public_path('project/' . $project->project_id . '/');
+        $zipFilePath = public_path('project/' . $project->project_id . '/' . $project->project_file);
+
+        // Check if a ZIP file already exists
+        if (File::exists($zipFilePath)) {
+            return response()->download($zipFilePath);
+        }
+
+        // Create a new ZIP file if it doesn't exist
+        $zip = new ZipArchive;
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
+            // Add all files from the project folder to the ZIP
+            $files = File::allFiles($projectFolder);
+            foreach ($files as $file) {
+                $relativeName = str_replace($projectFolder, '', $file->getRealPath());
+                $zip->addFile($file->getRealPath(), $relativeName);
+            }
+            $zip->close();
+        } else {
+            return redirect()->back()->with('error', 'Failed to create ZIP file.');
+        }
+
+        // Serve the newly created ZIP file for download
+        return response()->download($zipFilePath);
     }
 }

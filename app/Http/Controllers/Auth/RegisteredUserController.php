@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-
+use App\Helpers\MailHelper;
 class RegisteredUserController extends Controller
 {
     /**
@@ -53,7 +53,13 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        $admins = User::where('role', 'admin')->get();
+        $title = "NEW REGISTER";
+        $messageBody = "Hey Admin New Student Register On Your Website Or On A App..Please Check And Approve The Account...";
 
+        foreach ($admins as $user) {
+            MailHelper::sendEmailToUser($user->email, $title, $messageBody);
+        }
         return redirect(RouteServiceProvider::HOME);
     }
 
