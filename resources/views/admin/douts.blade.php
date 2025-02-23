@@ -42,7 +42,7 @@
                         <div class="user_dout_box_cover">
                             <div class="flex w-full items-center gap-2">
                                 <div class="w-fit rounded-full border border-slate-500 bg-white">
-                                    <img src="{{ asset('upload/user.png') }}" class="w-[50px]" alt="">
+                                    <img src="{{ $question->user->id === 16 ? asset('upload/niraj.jpg') : asset('upload/user.png') }}" class="w-[50px]" alt="">
                                 </div>
                                 <div class="w-10/12">
                                     <p class="text-md font-bold capitalize text-slate-600">{{ $question->user->name }}</p>
@@ -60,7 +60,7 @@
                                             <div class="user_answer_wapper m-3 rounded border border-slate-500 p-3">
                                                 <div class="flex w-full items-center gap-2">
                                                     <div class="w-fit rounded-full border border-slate-500 bg-white">
-                                                        <img src="{{ asset('upload/user.png') }}" class="w-[30px]" alt="">
+                                                        <img src="{{ $reply->user->id === 16 ? asset('upload/niraj.jpg') : asset('upload/user.png') }}" class="w-[30px]" alt="">
                                                     </div>
                                                     <div class="w-10/12">
                                                         <p class="text-sm font-bold capitalize text-slate-600">{{ $reply->user->name }}</p>

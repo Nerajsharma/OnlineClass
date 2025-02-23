@@ -2,44 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{ /* light thems defult */
-    ---bg-black:rgb(5, 11, 44);
-    ---text-black:black;  
-    ---text-white:white;
-    ---bg-white:white;
-    ---bg-slate:white;
-}
-.dark-them{ /*Dark */
-    ---text-white:black;
-    ---bg-white:rgb(2, 7, 32);
-    ---bg-black:white;
-    ---text-black:white;
-    ---bg-slate:white;
-
-}
-.bg-gray-50{
-    background-color:var(---bg-black) ;
-}
-.bg-gray-50{
-    background-color:var(---bg-white) ;
-}
-.text-gray-600{
-    color: var(---bg-black);
-}
-.bg-slate-100{
-    background-color: var(---bg-white);
-}
-.bg-slate-300{
-    background-color: var(---bg-white);
-}
-.bg-gray-100{
-    background-color:var(---bg-white) ;
-}
- 
-.text-black{
-    color: var(---bg-black);
-}
-
 .copy-link-btn
 .list_header div div a {
     margin-bottom: 6px;
@@ -47,6 +9,9 @@
     color: white;
     /* background-color: red; */
     transition: 0.2s;
+}
+a{
+    color: white;
 }
 .list_header div div a:hover {
     cursor: pointer;

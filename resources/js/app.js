@@ -123,3 +123,76 @@ document.getElementById("themsbtn").addEventListener("click", () => {
         document.querySelector("#themsbtn i").classList.remove("nb_sun");
     }
 });
+// filter student by name
+document.addEventListener("DOMContentLoaded", function () {
+    const studentTable = document.getElementById("studenttable");
+
+    if (!studentTable) {
+        console.log("Student table not found. Exiting filter functions.");
+        return;
+    }
+
+    // Elements for filtering
+    const nameInput = document.getElementById("filterstdname");
+    const batchSelect = document.getElementById("filterstdbatch");
+    const statusSelect = document.getElementById("filterstdstatus");
+
+    // Event Listeners for real-time filtering
+    nameInput.addEventListener("keyup", filterTablebyname);
+    batchSelect.addEventListener("change", filterbybatch);
+    statusSelect.addEventListener("change", filterbystatus);
+
+    const rows = studentTable.getElementsByTagName("tr");
+
+    function filterTablebyname() {
+        const nameFilter = nameInput.value.toLowerCase();
+
+        for (let i = 1; i < rows.length; i++) {
+            // Skip header row
+            const nameCell = rows[i].getElementsByTagName("td")[1]; // Name
+
+            if (nameCell) {
+                const nameText = nameCell.textContent.toLowerCase();
+
+                const nameMatch = nameText.includes(nameFilter);
+
+                // Show row only if all filters match
+                rows[i].style.display = nameMatch ? "" : "none";
+            }
+        }
+    }
+    function filterbybatch() {
+        const selectedBatch = batchSelect.value.toLowerCase();
+
+        for (let i = 1; i < rows.length; i++) {
+            const batchCell = rows[i].getElementsByTagName("td")[7]; // Batch
+
+            if (batchCell) {
+                const batchText = batchCell.textContent.toLowerCase();
+
+                const batchMatch =
+                    selectedBatch === "all batches" ||
+                    batchText === selectedBatch;
+                rows[i].style.display = batchMatch ? "" : "none";
+            }
+        }
+    }
+    function filterbystatus() {
+        const selectedStatus = statusSelect.value.toLowerCase();
+
+        for (let i = 1; i < rows.length; i++) {
+            const statusCell = rows[i].getElementsByTagName("td")[6]; // Status
+
+            if (statusCell) {
+                const statusText = statusCell.textContent.toLowerCase();
+
+                const statusMatch =
+                    selectedStatus === "all status" ||
+                    statusText.includes(selectedStatus);
+
+                rows[i].style.display = statusMatch ? "" : "none";
+            }
+        }
+    }
+
+});

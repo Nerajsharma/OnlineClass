@@ -17,8 +17,8 @@ class StudentController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.student', compact('users'));
-
+        $stbatches = Batch::all(); // Fetch all batches
+        return view('admin.student', compact('users', 'stbatches'));
     }
 
     /**

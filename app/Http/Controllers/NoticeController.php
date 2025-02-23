@@ -7,6 +7,8 @@ use App\Models\Notice;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\MailHelper;
 use App\Models\User;
+use App\Models\Batch;
+use App\Models\Project;
 class NoticeController extends Controller
 {
     /**
@@ -18,10 +20,15 @@ class NoticeController extends Controller
     {
         $user = Auth::user();
         $notices = Notice::latest()->get();
+        // Count total users and active users
+        $totalUser = User::count();
+        $activeUser = User::where('status','active')->count();
 
+        // Count total batches and active batches
+        $totalBatch = Batch::count();
+        $totalproject = Project::count();
         // Pass notices to the view
-        return view('dashboard', compact('notices', 'user'));
-
+        return view('dashboard', compact('notices', 'user', 'totalUser', 'activeUser', 'totalBatch', 'totalproject'));
     }
 
     /**
@@ -57,7 +64,7 @@ class NoticeController extends Controller
         $title = "Notice Uploaded";
 
         foreach ($users as $user) {
-            MailHelper::sendEmailToUser($user->email, $title, "hey ".$user->name .", Some Important Notice Has Been Published On the Website or App..Please Check it..Don't Miss It.");
+            MailHelper::sendEmailToUser($user->email, $title, "hey " . $user->name . ", Some Important Notice Has Been Published On the Website or App..Please Check it..Don't Miss It.");
         }
 
         // Redirect or return success response
