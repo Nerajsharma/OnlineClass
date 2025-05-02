@@ -34,8 +34,10 @@
                                             required>
                                             <option value="Select Batch" readonly disabled selected>Select Batch
                                             </option>
-                                            <option value="Frontend">Frontend</option>
-                                            <option value="Backend">Backend</option>
+                                            @foreach ($classbatch as $cbatch)
+                                                <option value="{{ $cbatch->id }}">{{ $cbatch->batch_name }}</option>
+                                            @endforeach
+
                                         </select>
                                     </div>
                                     <div class="flex items-center justify-center gap-2">
@@ -63,17 +65,17 @@
                 </div>
             @endif
             <div class="wrapper">
-                 @php
-                            $user = Auth::user();
-                            $role = $user->role;
-                            $usercource = $user->cource;
-                        @endphp
-                <table class=" w-full overflow-auto">
-                    <thead class=" w-full overflow-auto">
+                @php
+                    $user = Auth::user();
+                    $role = $user->role;
+                    $usercource = $user->cource;
+                @endphp
+                <table class="w-full overflow-auto">
+                    <thead class="w-full overflow-auto">
                         <tr class="">
                             <th class="text-black">Class ID</th>
-                            @if ($role==='admin')
-                            <th class="text-black">Batch</th>
+                            @if ($role === 'admin')
+                                <th class="text-black">Batch</th>
                             @endif
                             <th class="text-black">Start Date</th>
                             <th class="text-black">End Date</th>
@@ -85,8 +87,8 @@
                             @if ($class['link_batch'] === $usercource || $role === 'admin')
                                 <tr>
                                     <td class="text-black">{{ str_pad($class['id'], 4, '0', STR_PAD_LEFT) }}</td>
-                                    @if ($role==='admin')
-                                    <td class="text-black">{{ $class['link_batch'] }}</td>
+                                    @if ($role === 'admin')
+                                        <td class="text-black">{{ $class->batch->batch_name}}</td>
                                     @endif
                                     <td class="text-black">{{ $class->starttime }}</td>
                                     <td class="text-black">
@@ -97,20 +99,22 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <div class="flex flex-col md:flex-row gap-2 justify-center text-black"> 
-                                        @if ($class->status !== 'ended')
-                                            <a href="{{ $class->classlink }}">
-                                                <button class="rounded bg-green-500 px-8 py-1 text-white">Join</button>
-                                            </a>
-
-                                            @if ($role === 'admin')
-                                                <a href="{{ route('classes.end', $class->id) }}">
-                                                    <button class="rounded bg-red-500 px-8 py-1 text-white">End</button>
+                                        <div class="flex flex-col justify-center gap-2 text-black md:flex-row">
+                                            @if ($class->status !== 'ended')
+                                                <a href="{{ $class->classlink }}">
+                                                    <button
+                                                        class="rounded bg-green-500 px-8 py-1 text-white">Join</button>
                                                 </a>
+
+                                                @if ($role === 'admin')
+                                                    <a href="{{ route('classes.end', $class->id) }}">
+                                                        <button
+                                                            class="rounded bg-red-500 px-8 py-1 text-white">End</button>
+                                                    </a>
+                                                @endif
+                                            @else
+                                                {{ $class->status }}
                                             @endif
-                                        @else
-                                            {{ $class->status }}
-                                        @endif
                                         </div>
                                     </td>
                                 </tr>

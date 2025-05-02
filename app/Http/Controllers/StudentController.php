@@ -16,10 +16,14 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $stbatches = Batch::all(); // Fetch all batches
-        return view('admin.student', compact('users', 'stbatches'));
+        // $users = User::with('batch')->get();
+        $stubatches = Batch::withCount('customfields')->get(); // Also get count of custom fields per batch
+        $users = User::with('batches')->get();
+
+
+        return view('admin.student', compact('users', 'stubatches'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -61,9 +65,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $batches = Batch::all();
+        $sbatches = Batch::all();
         $user = User::findOrFail($id); // Find the user or throw 404
-        return view('admin.editstudent', compact('user', 'batches'))->with('success', 'Student Data update');
+        return view('admin.editstudent', compact('user', 'sbatches'))->with('success', 'Student Data update');
     }
 
     /**

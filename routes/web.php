@@ -12,14 +12,15 @@ use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\TestapiController;
 use App\Http\Controllers\QuestionController;
-
+use App\Http\Controllers\CustomRegister;
 
 Route::get('/', function () {
     return view('auth.login');
 });
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/register/batch', [CustomRegister::class, 'show'])->name('register.batch');
+Route::post('/register/batch/store/{batch}', [CustomRegister::class, 'store'])->name('register.batch.store');
+
 
 
 Route::group(['middleware' => ['auth', 'check.status', 'role:admin']], function () {

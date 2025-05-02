@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Batch;
 use Illuminate\Http\Request;
 use App\Models\classes;
 use App\Models\User;
@@ -17,10 +18,11 @@ class ControlerClasses extends Controller
      */
     public function index()
     {
-        $meet = classes::all();
-        // $user
-        return view('admin.class', compact('meet'));
+        $meet = Classes::with('batch')->get();
+        $classbatch = Batch::all();
+        return view('admin.class', compact('meet', 'classbatch'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -54,7 +56,7 @@ class ControlerClasses extends Controller
         $class->status = $request->status ?? 'active';
         $class->save();
 
-        $users = User::all();
+        $users = User::where('cource', request()->link_batch)->get();
         $title = "🎉 Class Started – Join Now!";
         $messageBody = "
     We are excited to announce that our live class has officially started! 🚀  
@@ -64,7 +66,7 @@ class ControlerClasses extends Controller
     Make sure to be on time and come prepared! If you have any questions, feel free to reach out.
 
     See you in class!.."
-;
+        ;
         foreach ($users as $user) {
             MailHelper::sendEmailToUser($user->email, $title, $messageBody);
         }

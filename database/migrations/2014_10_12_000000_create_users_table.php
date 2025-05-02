@@ -21,7 +21,6 @@ return new class extends Migration {
             $table->string('contact');
             $table->string('role')->default('user');
             $table->string('system')->nullable();
-            $table->string('cource')->nullable();
             $table->string('status')->default('pending');
             $table->rememberToken();
             $table->timestamps();

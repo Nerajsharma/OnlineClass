@@ -23,7 +23,6 @@ class User extends Authenticatable
         'password',
         'contact',
         'role',
-        'cource',
         'system',
         'status',
     ];
@@ -46,8 +45,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // public function batches()
+    // {
+    //     return $this->belongsToMany(Batch::class);
+    // }
+    public function batch()
+    {
+        return $this->belongsTo(Batch::class, 'cource');
+    }
     public function batches()
     {
-        return $this->belongsToMany(Batch::class);
+        return $this->belongsToMany(Batch::class, 'custom_fields', 'user_id', 'batch_id');
     }
+
+
 }

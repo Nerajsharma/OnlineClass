@@ -44,7 +44,7 @@ class NoteController extends Controller
         $request->validate([
             'notetitle' => 'required|string|max:255',
             'batchselect' => 'required|exists:batches,id', // Ensure batch ID exists
-            'notefile' => 'required|file|mimes:pdf,txt,doc,docx,html,css,js|max:2048',
+            'notefile' => 'required|file|max:2048',
         ]);
 
         // Generate a unique filename

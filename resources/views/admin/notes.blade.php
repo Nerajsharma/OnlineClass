@@ -10,16 +10,17 @@
         <div class="notes_wapper">
             <div class="notes_cover">
                 @if (Auth::user()->role === 'admin')
-                <div class="flex items-center justify-end pr-4">
-                    <button class="modelbtn cursor-pointer rounded-md bg-teal-600 px-5 py-1 text-lg font-bold text-white"
-                    modeltarget="upload_note_form">Upload
-                    Note</button>
-                </div>
+                    <div class="flex items-center justify-end pr-4">
+                        <button
+                            class="modelbtn cursor-pointer rounded-md bg-teal-600 px-5 py-1 text-lg font-bold text-white"
+                            modeltarget="upload_note_form">Upload
+                            Note</button>
+                    </div>
                 @endif
                 {{-- {{ $batch_id }} --}}
                 <div id="upload_note_form" class="model_box_wapper">
                     <div class="model_box_cover">
-                        <h2 class="model_header ">Upload Note</h2>
+                        <h2 class="model_header">Upload Note</h2>
                         <div class="model_box">
                             <form action="{{ route('notes.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
@@ -28,7 +29,7 @@
 
                                 <select name="batchselect" id="batchselect" class="w-full">
                                     @foreach ($batch_id as $item)
-                                        {{ $item }}
+                                        {{-- {{ $item }} --}}
                                         <option value="{{ $item->id }}">{{ $item->batch_name }}</option>
                                     @endforeach
                                 </select><br><br>
@@ -48,34 +49,36 @@
                 </div>
                 <div class="note_code line-numbers">
                     @foreach ($notes as $note)
-                        <div class="mt-6 flex items-center justify-between">
-                            <p class="code_header">{{ $note->title }}</p>
-                            @if (Auth::user()->role === 'admin')
-                                <!-- Delete Button -->
-                                <form action="{{ route('notes.destroy', $note->id) }}" method="POST"
-                                    style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="rounded bg-red-500 px-4 py-1 text-lg font-bold text-white">Delete</button>
-                                </form>
-                            @endif
+                        @if (Auth::user()->role === 'admin' || Auth::user()->cource == $note->batch_id)
+                            <div class="mt-6 flex items-center justify-between">
+                                <p class="code_header">{{ $note->title }}</p>
+                                <p class="code_header">{{ $note->batch_id }}</p>
+                                @if (Auth::user()->role === 'admin')
+                                    <!-- Delete Button -->
+                                    <form action="{{ route('notes.destroy', $note->id) }}" method="POST"
+                                        style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="rounded bg-red-500 px-4 py-1 text-lg font-bold text-white">Delete</button>
+                                    </form>
+                                @endif
 
-                        </div>
-                        @php
-                            $filePath = public_path($note->file_path);
-                            $extension = pathinfo($filePath, PATHINFO_EXTENSION); // Get file extension
+                            </div>
+                            @php
+                                $filePath = public_path($note->file_path);
+                                $extension = pathinfo($filePath, PATHINFO_EXTENSION); // Get file extension
 
-                            // Determine the correct language class
-                            $languageClass = match ($extension) {
-                                'html' => 'language-markup',
-                                'css' => 'language-css',
-                                'js' => 'language-js',
-                                default => 'language-plaintext', // Fallback for unknown types
-                            };
-                        @endphp
+                                // Determine the correct language class
+                                $languageClass = match ($extension) {
+                                    'html' => 'language-markup',
+                                    'css' => 'language-css',
+                                    'js' => 'language-js',
+                                    default => 'language-plaintext', // Fallback for unknown types
+                                };
+                            @endphp
 
-                        <pre><code class="{{ $languageClass }}" data-prismjs-copy="Copy!">
+                            <pre><code class="{{ $languageClass }}" data-prismjs-copy="Copy!">
                             @php
                                 // echo 'File Path: ' . $filePath . '<br>';
 
@@ -87,6 +90,7 @@
                                 }
                             @endphp
                         </code></pre>
+                        @endif
                     @endforeach
 
 

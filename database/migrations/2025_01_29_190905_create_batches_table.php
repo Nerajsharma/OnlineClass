@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->string('batch_name');
             $table->string('batch_cource');
             $table->string('batch_duration');
+            $table->string('formvalid');
+            $table->json('custom_fields')->nullable();
             $table->timestamps();
         });
     }

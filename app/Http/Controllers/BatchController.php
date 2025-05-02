@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Batch;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\CustomField;
 
 class BatchController extends Controller
 {
@@ -16,13 +17,14 @@ class BatchController extends Controller
     {
         $batchets = Batch::all();
 
-        // Count students based on batch_name column in users table
-        $bathcstd = User::select('cource')
-            ->selectRaw('COUNT(*) as student_count')
-            ->groupBy('cource')
-            ->pluck('student_count', 'cource');
-        return view('admin.batch', compact('batchets', 'bathcstd'));
+        // Add student count to each batch
+        foreach ($batchets as $batch) {
+            $batch->student_count = CustomField::where('batch_id', $batch->id)->count();
+        }
+
+        return view('admin.batch', compact('batchets'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,17 +44,38 @@ class BatchController extends Controller
      */
     public function store(Request $request)
     {
+        $labels = $request->custom_labels;
+        $types = $request->custom_types;
+        $requireds = $request->custom_requireds;
+
+        $customFields = [];
+
+        for ($i = 0; $i < count($labels); $i++) {
+            $customFields[] = [
+                'label' => $labels[$i],
+                'type' => $types[$i],
+                'required' => ($requireds[$i] === 'yes'),
+            ];
+        }
+
         $request->validate([
             'batch_name' => 'required|string|max:255',
             'batch_cource' => 'required|string|max:255',
             'batch_duration' => 'required|string|max:255',
+            'formvalid' => 'required',
         ]);
 
-        Batch::create($request->all());
+        Batch::create([
+            'batch_name' => $request->batch_name,
+            'batch_cource' => $request->batch_cource,
+            'batch_duration' => $request->batch_duration,
+            'formvalid' => $request->formvalid,
+            'custom_fields' => $customFields, // Laravel will cast this to JSON
+        ]);
 
         return back()->with('success', 'Batch added successfully!');
-
     }
+
 
     /**
      * Display the specified resource.
@@ -104,7 +127,7 @@ class BatchController extends Controller
     public function view($id)
     {
         $stbatch_name = Batch::All()->where('id', $id)->value('batch_name');
-        $stbatch = User::All()->where('cource', $stbatch_name);
+        $stbatch = User::All()->where('cource', $id);
         if (!$stbatch_name) {
             return back()->with('error', 'Batch not found');
         }

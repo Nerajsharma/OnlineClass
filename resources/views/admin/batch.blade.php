@@ -23,24 +23,33 @@
                             <form action="{{ route('batches.store') }}" method="post">
                                 @csrf
                                 <input type="text" name="batch_name" id="batch_name" placeholder="Batch Name"
-                                    required class="mb-3 w-full rounded border border-slate-400"><br>
+                                    required class="mb-3 w-full rounded border border-slate-400" title="Batch name"><br>
 
                                 <input type="text" name="batch_cource" id="batch_cource" placeholder="Batch Courses"
-                                    required class="mb-3 w-full rounded border border-slate-400"><br>
+                                    required class="mb-3 w-full rounded border border-slate-400"
+                                    title="Batch cource"><br>
 
                                 <input type="text" name="batch_duration" id="batch_duration"
                                     placeholder="Batch Courses Duration" required
-                                    class="mb-3 w-full rounded border border-slate-400"><br>
+                                    class="mb-3 w-full rounded border border-slate-400" title="Bath Duration"><br>
                                 {{-- <input type="text" name="batch_host" id="batch_host" placeholder="Batch Host Name"
                                     required class="mb-3 w-full rounded border border-slate-400"><br>
-
-                                <input type="datetime-local" name="batch_expired" id="batch_expired"
+                                    
+                                    <input type="datetime-local" name="batch_expired" id="batch_expired"
                                     placeholder="batch_expired" required
                                     class="mb-3 w-full rounded border border-slate-400"><br> --}}
+                                {{-- Container for extra dynamic fields --}}
+                                <div id="extraFields" class="mb-4"></div>
 
-                                <div class="flex justify-center">
+                                <input type="datetime-local" name="formvalid" id="formvalid"
+                                    placeholder="Form Fill uptime" title="Deadline of form fill up" required
+                                    class="mb-3 w-full rounded border border-slate-400"><br>
+                                <div class="flex justify-center gap-3">
                                     <button type="button"
-                                        class="closeModal mr-2 rounded bg-rose-300 px-4 py-2">Cancel</button>
+                                        class="closeModal rounded bg-rose-300 px-4 py-2">Cancel</button>
+                                    <button type="button" class="rounded bg-green-400 px-4 py-2 text-white"
+                                        id="addFieldBtn">Add
+                                        Field</button>
                                     <button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white">Add
                                         Batch</button>
                                 </div>
@@ -69,18 +78,32 @@
                             </thead>
                             <tbody>
                                 @forelse ($batchets as $batch)
+                                    {{-- {{ $batch }} --}}
                                     <tr class="border-b border-b-slate-300">
                                         <td class="py-2 text-black">{{ $batch->id }}</td>
                                         <td class="py-2 text-black">{{ $batch->created_at }}</td>
                                         <td class="py-2 text-black">{{ $batch->batch_name }}</td>
                                         <td class="py-2 text-black">{{ $batch->batch_cource }}</td>
                                         <td class="py-2 text-black">{{ $batch->batch_duration }} Hrs</td>
-                                        <td class="py-2 text-black">{{ $bathcstd[$batch->batch_name] ?? 0 }}</td>
+                                        <td class="py-2 text-black">{{ $batch->student_count}}</td>
+
                                         {{-- <td class="py-2">Neeraj</td>
                                         <td class="py-2">Neeraj</td>
                                         <td class="py-2">2081-10-15 10:15:15</td> --}}
                                         <td class="py-2">
-                                            <div class="flex flex-col gap-2">
+                                            <div class="flex w-full flex-col justify-center gap-2 md:flex-row">
+
+                                                @php
+                                                    $encryptedId = Illuminate\Support\Facades\Crypt::encryptString($batch->id);
+                                                @endphp
+
+                                                <button
+                                                    class="batchlinkbtn mx-1 rounded bg-teal-500 px-4 py-1 hover:bg-teal-600 hover:font-bold"
+                                                    copy-data="{{ $encryptedId }}">
+                                                    Copy link
+                                                </button>
+
+
                                                 <a href="{{ route('batches.viewdetails', ['id' => $batch->id]) }}">
                                                     <button
                                                         class="mx-1 rounded bg-teal-500 px-4 py-1 hover:bg-teal-600 hover:font-bold">
@@ -89,7 +112,8 @@
                                                 </a>
                                                 {{-- <button
                                                 class="mx-1 rounded bg-amber-300 px-4 py-1 hover:bg-amber-600 hover:font-bold">Link</button> --}}
-                                                <form action="{{ route('batches.destroy', $batch->id) }}" method="POST"
+                                                <form action="{{ route('batches.destroy', $batch->id) }}"
+                                                    method="POST"
                                                     onsubmit="return confirm('Are you sure you want to delete this batch?');">
                                                     @csrf
                                                     @method('DELETE')
@@ -114,4 +138,70 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('addFieldBtn').addEventListener('click', function() {
+            const container = document.getElementById('extraFields');
+
+            const fieldWrapper = document.createElement('div');
+            fieldWrapper.classList.add('mb-3', 'flex', 'items-center', 'gap-2');
+
+            // Label input
+            const labelInput = document.createElement('input');
+            labelInput.type = 'text';
+            labelInput.name = 'custom_labels[]';
+            labelInput.placeholder = 'Field Label';
+            labelInput.className = 'rounded border border-slate-400 p-2 w-1/3';
+
+            // Type select
+            const select = document.createElement('select');
+            select.name = 'custom_types[]';
+            select.className = 'rounded border border-slate-400 p-2 w-1/3';
+
+            const types = ['text', 'number', 'date', 'email', 'datetime-local', 'time', 'file'];
+            types.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+                select.appendChild(option);
+            });
+
+            // Required checkbox
+            const requiredLabel = document.createElement('label');
+            requiredLabel.className = 'flex items-center gap-1 text-sm';
+
+            const requiredCheckbox = document.createElement('input');
+            requiredCheckbox.type = 'checkbox';
+            requiredCheckbox.name = 'custom_requireds[]';
+            requiredCheckbox.value = 'yes';
+
+            requiredLabel.appendChild(requiredCheckbox);
+            requiredLabel.appendChild(document.createTextNode('Required'));
+
+            // Hidden input for unchecked checkboxes
+            const hiddenRequired = document.createElement('input');
+            hiddenRequired.type = 'hidden';
+            hiddenRequired.name = 'custom_requireds[]';
+            hiddenRequired.value = 'no';
+
+            fieldWrapper.appendChild(labelInput);
+            fieldWrapper.appendChild(select);
+            fieldWrapper.appendChild(hiddenRequired); // add before checkbox so "no" is submitted if not checked
+            fieldWrapper.appendChild(requiredLabel);
+
+            container.appendChild(fieldWrapper);
+        });
+
+document.querySelectorAll('.batchlinkbtn').forEach(function(button) {
+    button.addEventListener('click', function() {
+        const encryptedId = this.getAttribute('copy-data');
+        const link = `${window.location.origin}/register/batch?has=${encodeURIComponent(encryptedId)}`;
+        navigator.clipboard.writeText(link).then(function() {
+            toaster("success", "Link Copied", "Batch link copied to clipboard.");
+        }, function(err) {
+            console.error('Could not copy text: ', err);
+        });
+    });
+});
+
+    </script>
 </x-app-layout>

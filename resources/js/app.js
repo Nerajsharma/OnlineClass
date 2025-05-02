@@ -105,24 +105,24 @@ document.querySelectorAll(".projectcopylink").forEach((button) => {
 });
 
 // check user kun them select
-if (localStorage.getItem("dark-thems") === "enable") {
-    document.documentElement.classList.add("dark-them");
-    document.querySelector("#themsbtn i").classList.remove("nb_moon");
-    document.querySelector("#themsbtn i").classList.add("nb_sun");
-}
-document.getElementById("themsbtn").addEventListener("click", () => {
-    document.documentElement.classList.toggle("dark-them");
+// if (localStorage.getItem("dark-thems") === "enable") {
+//     document.documentElement.classList.add("dark-them");
+//     document.querySelector("#themsbtn i").classList.remove("nb_moon");
+//     document.querySelector("#themsbtn i").classList.add("nb_sun");
+// }
+// document.getElementById("themsbtn").addEventListener("click", () => {
+//     document.documentElement.classList.toggle("dark-them");
 
-    if (document.documentElement.classList.contains("dark-them")) {
-        localStorage.setItem("dark-thems", "enable");
-        document.querySelector("#themsbtn i").classList.remove("nb_moon");
-        document.querySelector("#themsbtn i").classList.add("nb_sun");
-    } else {
-        localStorage.setItem("dark-thems", "disable");
-        document.querySelector("#themsbtn i").classList.add("nb_moon");
-        document.querySelector("#themsbtn i").classList.remove("nb_sun");
-    }
-});
+//     if (document.documentElement.classList.contains("dark-them")) {
+//         localStorage.setItem("dark-thems", "enable");
+//         document.querySelector("#themsbtn i").classList.remove("nb_moon");
+//         document.querySelector("#themsbtn i").classList.add("nb_sun");
+//     } else {
+//         localStorage.setItem("dark-thems", "disable");
+//         document.querySelector("#themsbtn i").classList.add("nb_moon");
+//         document.querySelector("#themsbtn i").classList.remove("nb_sun");
+//     }
+// });
 // filter student by name
 document.addEventListener("DOMContentLoaded", function () {
     const studentTable = document.getElementById("studenttable");

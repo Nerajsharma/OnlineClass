@@ -48,8 +48,11 @@
                     <!-- System -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700">System</label>
-                        <input type="text" name="system" value="{{ $user->system }}"
-                            class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm">
+                            <select name="system" id="system" class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm">
+                                <option value="{{ $user->system == 'Computer' ? 'selected' : '' }}">Computer</option>
+                                <option value="{{ $user->system == 'Laptop' ? 'selected' : '' }}">Laptop</option>
+                                <option value="{{ $user->system == 'Mobile' ? 'selected' : '' }}">Mobile</option>
+                            </select>
                     </div>
 
                     <!-- Status -->
@@ -67,8 +70,8 @@
                         <label class="block text-sm font-medium text-gray-700">Batch</label>
                         <select name="cource" id="cource"
                             class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm">
-                            @foreach ($batches as $batch)
-                                <option value="{{ $batch->batch_name }}"
+                            @foreach ($sbatches as $batch)
+                                <option value="{{ $batch->id }}"
                                     {{ isset($user->cource) && $batch->batch_name === $user->cource ? 'selected' : '' }}>
                                     {{ $batch->batch_name }}
                                 </option>

@@ -14,16 +14,16 @@
                         <h1 class="text-2xl font-bold text-gray-800" id="el-qqege6lk">Students</h1>
                         <div class="w-fit">
                             <select
-                                class="cursor-pointer w-[130px] rounded-lg border border-neutral-200/30 p-2 focus:border-blue-500 focus:outline-none"
+                                class="w-[130px] cursor-pointer rounded-lg border border-neutral-200/30 p-2 focus:border-blue-500 focus:outline-none"
                                 id="filterstdbatch">
                                 <option selected readonly>All Batches</option>
-                                @foreach ($stbatches as $selbatch)
+                                @foreach ($stubatches as $selbatch)
                                     <option>{{ $selbatch->batch_name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class=""><select
-                                class="cursor-pointer w-[130px] rounded-lg border border-neutral-200/30 p-2 focus:border-blue-500 focus:outline-none"
+                                class="w-[130px] cursor-pointer rounded-lg border border-neutral-200/30 p-2 focus:border-blue-500 focus:outline-none"
                                 id="filterstdstatus">
                                 <option>All Status</option>
                                 <option>Pending</option>
@@ -52,7 +52,8 @@
             </div>
         </div>
         <div class="container overflow-x-auto overflow-y-hidden">
-            <table class="h-full w-full table-auto border-collapse rounded-lg bg-gray-50 text-center shadow-md" id="studenttable">
+            <table class="h-full w-full table-auto border-collapse rounded-lg bg-gray-50 text-center shadow-md"
+                id="studenttable">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="px-6 py-3 text-left text-sm font-medium text-black">Date</th>
@@ -78,7 +79,13 @@
                             <td
                                 class="@if ($user->status == 'active') bg-green-200 @elseif ($user->status == 'pending') bg-yellow-200 @elseif ($user->status == 'block') bg-red-200 @endif p-1 text-sm font-bold capitalize text-black">
                                 {{ $user->status }}</td>
-                            <td class="p-1 text-sm text-black">{{ $user->cource }}</td>
+                            <td class="p-1 text-sm text-black">
+                                @forelse ($user->batches as $batch)
+                                    <p>{{ $batch->batch_name }}</p>
+                                @empty
+                                    <p>No batch assigned</p>
+                                @endforelse
+                            </td>
                             <td class="p-1 text-sm text-black">
                                 <div class="flex flex-col gap-2">
                                     @if ($user->status == 'block' || $user->status == 'pending')

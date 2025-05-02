@@ -28,4 +28,9 @@ class classes extends Model
         'starttime' => 'datetime',
         'endtime' => 'datetime',
     ];
+    public function batch()
+    {
+        return $this->belongsTo(Batch::class, 'link_batch', 'id');
+    }
+
 }

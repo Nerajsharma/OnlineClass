@@ -59,7 +59,7 @@
                                     <th class="py-3 text-black">Upload date</th>
                                     <th class="py-3 text-black">Size</th>
                                     @if (Auth::user()->role === 'admin')
-                                    <th class="py-3 text-black">Batch</th>
+                                        <th class="py-3 text-black">Batch</th>
                                     @endif
                                     <th class="py-3 text-black">Upload By</th>
                                     <th class="py-3"></th>
@@ -67,46 +67,59 @@
                             </thead>
                             <tbody>
                                 @foreach ($materiales as $item)
-                                    <tr class="border-b border-b-slate-300 text-black">
-                                        <td class="py-2">{{ $item->id }}</td>
-                                        <td class="py-2">{{ $item->material_name }}</td>
-                                        <td class="py-2">{{ $item->created_at->format('d M Y') }}</td>
-                                        <td class="py-2">{{ $item->file_size }}</td>
-                                        @if (Auth::user()->role === 'admin')
-                                        <td class="py-2">
-                                            @php
-                                                // Ensure material_cource is a string before decoding
-                                                $batchIds = is_array($item->material_cource)
-                                                    ? $item->material_cource
-                                                    : json_decode($item->material_cource, true);
-                                                    $batches = \App\Models\Batch::whereIn('id', (array) $batchIds)
-                                                    ->pluck('batch_name')
-                                                    ->implode(', ');
+                                    @php
+                                        $batchIds = is_array($item->material_cource)
+                                            ? $item->material_cource
+                                            : json_decode($item->material_cource, true);
+                                    @endphp
+
+                                    @if (Auth::user()->role === 'admin' || (is_array($batchIds) && in_array(Auth::user()->cource, $batchIds)))
+                                        <tr class="border-b border-b-slate-300 text-black">
+                                            <td class="py-2">{{ $item->id }}</td>
+                                            <td class="py-2">{{ $item->material_name }}</td>
+                                            <td class="py-2">{{ $item->created_at->format('d M Y') }}</td>
+                                            <td class="py-2">{{ $item->file_size }}</td>
+
+                                            @if (Auth::user()->role === 'admin')
+                                                <td class="py-2">
+                                                    @php
+                                                        $batches = \App\Models\Batch::whereIn('id', (array) $batchIds)
+                                                            ->pluck('batch_name')
+                                                            ->implode(', ');
                                                     @endphp
-                                            {{ $batches }}
-                                        </td>
-                                        @endif
-                                        <td class="py-2">{{ $item->uploaded_by }}</td>
+                                                    {{ $batches }}
+                                                </td>
+                                            @else
+                                                <td class="py-2">
+                                                    @php
+                                                        $userBatch = \App\Models\Batch::find(Auth::user()->cource);
+                                                    @endphp
+                                                    {{ $userBatch ? $userBatch->batch_name : 'No Batch Found' }}
+                                                </td>
+                                            @endif
 
-                                        <td class="py-2 w-fit">
-                                            <div class="flex w-fit flex-col md:flex-row"> 
-                                            <a href="{{ asset('material/' . $item->material_file) }}" class="w-fit mb-3 mr-2" target="_blank">
-                                                <button
-                                                    class="mx-1 rounded bg-teal-500 px-4 py-1 hover:bg-teal-600 hover:font-bold">View</button>
-                                            </a>
-                                            <a href="{{ asset('material/' . $item->material_file) }}"
-                                                download="{{ now()->format('Ymd_His') . '_' . $item->material_name }}" class="w-fit">
-                                                <button
-                                                    class="mx-1 rounded bg-green-500 px-4 py-1 hover:bg-green-600 hover:font-bold">Download</button>
-                                            </a>
-                                            </div>
+                                            <td class="py-2">{{ $item->uploaded_by }}</td>
 
-                                        </td>
-                                    </tr>
+                                            <td class="w-fit py-2">
+                                                <div class="flex w-fit flex-col md:flex-row">
+                                                    <a href="{{ asset('material/' . $item->material_file) }}"
+                                                        class="mb-3 mr-2 w-fit" target="_blank">
+                                                        <button
+                                                            class="mx-1 rounded bg-teal-500 px-4 py-1 hover:bg-teal-600 hover:font-bold">View</button>
+                                                    </a>
+                                                    <a href="{{ asset('material/' . $item->material_file) }}"
+                                                        download="{{ now()->format('Ymd_His') . '_' . $item->material_name }}"
+                                                        class="w-fit">
+                                                        <button
+                                                            class="mx-1 rounded bg-green-500 px-4 py-1 hover:bg-green-600 hover:font-bold">Download</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
-
-
                             </tbody>
+
                         </table>
                     </div>
                 </div>
